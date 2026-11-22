@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinela Diário — Monitoramento Inteligente de Diários Oficiais por CNPJ</title>
+  <meta name="description" content="Receba alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial: contratos, aditivos, reajustes, prazos e notificações." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0b132b;
+      --navy-2: #162244;
+      --slate: #475569;
+      --muted: #64748b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--navy);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--navy), var(--emerald-dark));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 0.93rem;
+      font-weight: 500;
+      color: var(--slate);
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.18s ease;
+    }
+    .btn-primary {
+      background: var(--emerald);
+      color: #fff;
+      box-shadow: 0 8px 20px -6px rgba(16, 185, 129, 0.55);
+    }
+    .btn-primary:hover { background: var(--emerald-dark); transform: translateY(-1px); }
+    .btn-outline {
+      background: #fff;
+      color: var(--navy);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: #cbd5e1; background: #f1f5f9; }
+
+    /* Hero */
+    .hero {
+      padding: 72px 0 80px;
+      background: radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.12), transparent 45%),
+                  linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--emerald-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      line-height: 1.14;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+    .hero p {
+      font-size: 1.08rem;
+      color: var(--slate);
+      margin-bottom: 28px;
+      max-width: 560px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .trust-row span::before {
+      content: "✓ ";
+      color: var(--emerald-dark);
+      font-weight: 700;
+    }
+
+    /* Alert Preview Card */
+    .preview-card {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 24px 50px -15px rgba(11, 19, 43, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .preview-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .badge-live {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+    .alert-msg {
+      background: rgba(255, 255, 255, 0.06);
+      border-left: 3px solid var(--emerald);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+      font-size: 0.88rem;
+    }
+    .alert-msg.urgent { border-left-color: var(--amber); }
+    .alert-msg strong { display: block; margin-bottom: 6px; font-size: 0.94rem; }
+    .alert-meta { color: #cbd5e1; font-size: 0.82rem; }
+
+    /* Sections */
+    section { padding: 72px 0; }
+    .sec-head { text-align: center; max-width: 660px; margin: 0 auto 48px; }
+    .sec-head h2 {
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .sec-head p { color: var(--slate); font-size: 1rem; }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px -12px rgba(15, 23, 42, 0.12);
+    }
+    .icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--emerald-dark);
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .card p { font-size: 0.94rem; color: var(--slate); }
+
+    /* Trial Box */
+    .cta-section {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 24px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .cta-section h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+    .cta-section p { color: #cbd5e1; margin-bottom: 20px; }
+    .trial-form {
+      background: #fff;
+      color: var(--navy);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--slate);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.94rem;
+      font-family: inherit;
+    }
+    .form-group input:focus { outline: 2px solid var(--emerald); border-color: transparent; }
+    .form-note { font-size: 0.78rem; color: var(--muted); margin-top: 10px; text-align: center; }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid, .grid-3, .grid-2, .cta-section { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .cta-section { padding: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <span class="brand-icon">S</span>
+        <span>Sentinela Diário</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#monitoramento">O que monitoramos</a>
+        <a href="#teste-gratis">Teste 15 dias grátis</a>
+      </nav>
+      <a href="#teste-gratis" class="btn btn-primary">Ativar teste grátis</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">Monitoramento Diário Oficial • SJC e Região</div>
+          <h1>Saiba no mesmo dia quando a sua empresa sai no Diário Oficial.</h1>
+          <p>
+            O <strong>Sentinela Diário</strong> lê diariamente os Diários Oficiais, identifica citações ao seu CNPJ ou razão social e envia um resumo objetivo no seu <strong>WhatsApp e e-mail</strong>.
+          </p>
+          <div class="hero-actions">
+            <a href="#teste-gratis" class="btn btn-primary">Testar 15 dias gratuitamente</a>
+            <a href="#monitoramento" class="btn btn-outline">Ver o que monitoramos</a>
+          </div>
+          <div class="trust-row">
+            <span>Sem instalação</span>
+            <span>Resumo pronto com nº do contrato e página</span>
+            <span>Cancele quando quiser</span>
+          </div>
+        </div>
+
+        <div class="preview-card" aria-label="Exemplo de alerta recebido">
+          <div class="preview-top">
+            <span>Exemplo real de alerta enviado</span>
+            <span class="badge-live">Monitoramento Ativo</span>
+          </div>
+          <div class="alert-msg">
+            <strong>📄 Publicação de Aditivo Contratual</strong>
+            <div class="alert-meta">
+              Diário de São José dos Campos • Edição nº 3.831 (Pág. 3)<br />
+              <b>Ato:</b> 1º Termo de Aditamento à ARP nº 179/2025<br />
+              <b>Nova vigência:</b> 17/11/2027 • <b>Acréscimo:</b> R$ 1.053.600,00
+            </div>
+          </div>
+          <div class="alert-msg urgent">
+            <strong>⚠️ Alerta Crítico: Notificação / Rescisão</strong>
+            <div class="alert-meta">
+              Diário do Município • Pág. 11<br />
+              <b>Ato:</b> Edital / Notificação com prazo em aberto.<br />
+              Encaminhado imediatamente para o jurídico e diretoria.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona">
+      <div class="container">
+        <div class="sec-head">
+          <h2>Como o Sentinela Diário protege sua operação</h2>
+          <p>Chega de depender de buscas manuais em PDFs de dezenas de páginas ou descobrir prazos vencidos tarde demais.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon-box">1</div>
+            <h3>Cadastro pelo CNPJ</h3>
+            <p>Você informa o CNPJ da empresa (ou das filiais) e os contatos do financeiro, licitações ou jurídico que devem receber os alertas.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">2</div>
+            <h3>Leitura automática diária</h3>
+            <p>Nossa ferramenta analisa todas as páginas e colunas dos Diários Oficiais assim que a edição é publicada, cruzando razão social, CNPJ e número de processo.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">3</div>
+            <h3>Resumo direto no WhatsApp e E-mail</h3>
+            <p>Sempre que houver uma citação, você recebe o tipo de ato, página, objeto, valores e prazos — pronto para agir sem perder tempo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="monitoramento" style="background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+      <div class="container">
+        <div class="sec-head">
+          <h2>O que monitoramos para a sua empresa</h2>
+          <p>Ideal para fornecedores de órgãos públicos, construtoras, distribuidoras e empresas reguladas.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Contratos, Aditivos e Atas (ARPs)</h3>
+            <p>Acompanhe extratos de novos contratos, prorrogações de vigência, acréscimos de saldo e dispensas de licitação no dia da publicação.</p>
+          </div>
+          <div class="card">
+            <h3>Reajustes e Apostilamentos</h3>
+            <p>Fique sabendo exatamente quando um reajuste pelo IPCA/IPC-FIPE ou alteração de dotação orçamentária for formalizado para faturar sem atrasos.</p>
+          </div>
+          <div class="card">
+            <h3>Rescisões e Sanções</h3>
+            <p>Receba alertas prioritários caso saia qualquer termo de rescisão unilateral, advertência, multa ou abertura de processo administrativo.</p>
+          </div>
+          <div class="card">
+            <h3>Editais Sanitários e Fiscais</h3>
+            <p>Notificações da Vigilância Sanitária, registros municipais (SIM), editais de intimação tributária e convocações com prazo correndo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teste-gratis">
+      <div class="container">
+        <div class="cta-section">
+          <div>
+            <h2>Teste gratuitamente por 15 dias no seu CNPJ</h2>
+            <p>
+              Quer validar na prática? Cadastre seu CNPJ e receba os próximos alertas de publicações oficiais da sua empresa sem custo e sem compromisso.
+            </p>
+            <div class="trust-row" style="color:#cbd5e1;">
+              <span>Ativação no mesmo dia</span>
+              <span>Suporte direto pelo WhatsApp</span>
+            </div>
+          </div>
+
+          <form class="trial-form" id="trialForm">
+            <div class="form-group">
+              <label for="empresa">Nome da Empresa ou CNPJ</label>
+              <input type="text" id="empresa" required placeholder="Ex: 00.000.000/0001-00" />
+            </div>
+            <div class="form-group">
+              <label for="nome">Seu Nome</label>
+              <input type="text" id="nome" required placeholder="Como prefere ser chamado(a)" />
+            </div>
+            <div class="form-group">
+              <label for="contato">WhatsApp ou E-mail para receber os alertas</label>
+              <input type="text" id="contato" required placeholder="(12) 99999-9999 ou seu@email.com.br" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Solicitar teste grátis de 15 dias</button>
+            <p class="form-note" id="formFeedback">Resposta rápida em horário comercial.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 Sentinela Diário — Monitoramento de Diários Oficiais.</span>
+      <a href="painel.html" style="color:var(--slate); font-weight:600;">Painel de Análise e Prospecção →</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('trialForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const empresa = document.getElementById('empresa').value.trim();
+      const nome = document.getElementById('nome').value.trim();
+      const contato = document.getElementById('contato').value.trim();
+      const feedback = document.getElementById('formFeedback');
+
+      const subject = encodeURIComponent(`Teste 15 dias grátis — ${empresa}`);
+      const body = encodeURIComponent(
+        `Olá!\n\nGostaria de ativar o teste gratuito de 15 dias do Sentinela Diário.\n\n` +
+        `• Empresa/CNPJ: ${empresa}\n` +
+        `• Nome: ${nome}\n` +
+        `• WhatsApp/E-mail para alertas: ${contato}\n`
+      );
+      feedback.innerHTML = `<span style="color:#059669;font-weight:600;">Solicitação preparada!</span> Abrindo seu cliente de e-mail...`;
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>

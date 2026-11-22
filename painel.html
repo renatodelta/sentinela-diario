@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinela Diário — Painel de Tratamento e Prospecção (DOU SJC)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f172a;
+      --slate: #475569;
+      --muted: #64748b;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      line-height: 1.5;
+    }
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-badge {
+      width: 34px; height: 34px; border-radius: 9px;
+      background: var(--emerald); color: #fff;
+      display: grid; place-items: center; font-weight: 800;
+    }
+    .brand h1 { font-size: 1.05rem; font-weight: 700; }
+    .brand span { font-size: 0.78rem; color: #94a3b8; display: block; }
+    .header-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 14px; border-radius: 8px; border: 1px solid transparent;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: all 0.15s ease; text-decoration: none;
+    }
+    .btn-primary { background: var(--emerald); color: #fff; }
+    .btn-primary:hover { background: var(--emerald-dark); }
+    .btn-dark { background: #1e293b; color: #e2e8f0; border-color: #334155; }
+    .btn-dark:hover { background: #334155; }
+    .btn-light { background: #fff; color: var(--navy); border-color: var(--border); }
+    .btn-light:hover { background: #f8fafc; }
+    .btn-sm { padding: 6px 10px; font-size: 0.78rem; }
+
+    .container { max-width: 1360px; margin: 0 auto; padding: 22px 24px; }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .stat-label { font-size: 0.76rem; font-weight: 600; color: var(--muted); text-transform: uppercase; }
+    .stat-value { font-size: 1.65rem; font-weight: 800; margin-top: 2px; }
+
+    /* Toolbar */
+    .toolbar {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; margin-bottom: 20px;
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    }
+    .toolbar input[type="text"], .toolbar select {
+      padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.88rem; font-family: inherit; background: #fff;
+    }
+    .toolbar input[type="text"] { flex: 1; min-width: 220px; }
+
+    /* Workspace split */
+    .workspace {
+      display: grid;
+      grid-template-columns: 430px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .list-col {
+      display: flex; flex-direction: column; gap: 10px;
+      max-height: calc(100vh - 210px); overflow-y: auto; padding-right: 4px;
+    }
+    .occ-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; cursor: pointer; transition: all 0.15s ease;
+    }
+    .occ-card:hover { border-color: #94a3b8; }
+    .occ-card.active { border-color: var(--emerald); box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2); }
+    .occ-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .occ-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    .occ-sub { font-size: 0.8rem; color: var(--slate); display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .badge {
+      display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    }
+    .prio-alta { background: #fee2e2; color: #b91c1c; }
+    .prio-media { background: #fef3c7; color: #b45309; }
+    .prio-baixa { background: #e0f2fe; color: #0369a1; }
+    .prio-descartar { background: #e2e8f0; color: #475569; }
+    .st-pendente { background: #f1f5f9; color: #475569; }
+    .st-enviado { background: #dcfce7; color: #15803d; }
+    .st-respondeu { background: #dbeafe; color: #1d4ed8; }
+    .st-descartado { background: #e2e8f0; color: #64748b; }
+
+    /* Detail Panel */
+    .detail-col {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px;
+    }
+    .detail-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 16px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+    .detail-header h2 { font-size: 1.2rem; font-weight: 800; }
+    .meta-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px; margin-bottom: 18px; background: #f8fafc; padding: 14px; border-radius: 10px;
+      border: 1px solid var(--border); font-size: 0.84rem;
+    }
+    .meta-item strong { display: block; font-size: 0.74rem; color: var(--muted); text-transform: uppercase; }
+
+    .section-box { margin-bottom: 20px; }
+    .section-box h3 {
+      font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .cnpj-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+    .cnpj-row input {
+      padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.88rem; width: 190px; font-family: inherit;
+    }
+
+    .email-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+    .email-item {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: #f8fafc;
+      font-size: 0.86rem;
+    }
+    .email-item label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; }
+    .email-source { font-size: 0.74rem; color: var(--muted); }
+
+    .add-email-row { display: flex; gap: 8px; }
+    .add-email-row input {
+      flex: 1; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.86rem; font-family: inherit;
+    }
+
+    .field-label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--slate); margin-bottom: 5px; }
+    .text-input, textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.88rem; font-family: inherit; margin-bottom: 10px;
+    }
+    textarea { min-height: 210px; resize: vertical; line-height: 1.55; }
+
+    .trecho-box {
+      background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px;
+      padding: 12px; font-size: 0.8rem; color: var(--slate);
+    }
+
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; background: var(--navy); color: #fff;
+      padding: 11px 18px; border-radius: 10px; font-size: 0.86rem; font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); display: none; z-index: 60;
+    }
+
+    @media (max-width: 980px) {
+      .workspace { grid-template-columns: 1fr; }
+      .list-col { max-height: 360px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-badge">S</div>
+      <div>
+        <h1>Sentinela Diário — Painel de Tratamento (DOU SJC)</h1>
+        <span id="metaSummary">Carregando dados da pasta dou-sj/...</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-dark" id="btnToggleAutoEmail" title="Ativar ou desativar o envio automático diário de e-mails">Envio Automático: ...</button>
+      <a href="index.html" class="btn btn-dark" target="_blank">Ver Landing Page ↗</a>
+      <label class="btn btn-dark" style="cursor:pointer;">
+        Enviar PDF para dou-sj/
+        <input type="file" id="pdfUpload" accept=".pdf" style="display:none;" />
+      </label>
+      <button class="btn btn-primary" id="btnAnalyze">Reanalisar PDFs</button>
+      <a href="data/ocorrencias.csv" download="ocorrencias_dou_sjc.csv" class="btn btn-dark">Exportar CSV</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="Buscar por empresa, CNPJ, objeto, contrato ou e-mail..." />
+      <select id="filterPrio">
+        <option value="all">Prioridade: Todas</option>
+        <option value="alta">Alta</option>
+        <option value="media">Média</option>
+        <option value="baixa">Baixa</option>
+        <option value="descartar">Descartadas (Estatais/OS)</option>
+      </select>
+      <select id="filterStatus">
+        <option value="all">Status: Todos</option>
+        <option value="pendente">Pendente</option>
+        <option value="enviado">E-mail Enviado</option>
+        <option value="respondeu">Respondeu</option>
+        <option value="descartado">Descartado</option>
+      </select>
+      <select id="filterFile">
+        <option value="all">Edição / PDF: Todos</option>
+      </select>
+    </div>
+
+    <div class="workspace">
+      <div class="list-col" id="occList"></div>
+      <div class="detail-col" id="detailPane">
+        <p style="color:var(--muted);">Selecione uma ocorrência à esquerda para tratar os dados, consultar o CNPJ e enviar o e-mail.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let store = { ocorrencias: [], arquivos_analisados: [] };
+    let selectedId = null;
+    let emailAutoEnabled = false;
+
+    function renderAutoEmailButton() {
+      const btn = document.getElementById('btnToggleAutoEmail');
+      if (!btn) return;
+      if (emailAutoEnabled) {
+        btn.textContent = 'Envio Automático: ATIVADO';
+        btn.className = 'btn btn-primary';
+      } else {
+        btn.textContent = 'Envio Automático: DESATIVADO';
+        btn.className = 'btn btn-dark';
+        btn.style.borderColor = '#ef4444';
+        btn.style.color = '#fca5a5';
+      }
+      if (emailAutoEnabled) {
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+    }
+
+    async function loadSettings() {
+      try {
+        const res = await fetch('api/index.php?action=get_settings');
+        if (res.ok) {
+          const data = await res.json();
+          emailAutoEnabled = Boolean(data.email_auto_enabled);
+          localStorage.setItem('sentinela_email_auto_enabled', String(emailAutoEnabled));
+        } else {
+          throw new Error('Fallback');
+        }
+      } catch {
+        emailAutoEnabled = localStorage.getItem('sentinela_email_auto_enabled') === 'true';
+      }
+      renderAutoEmailButton();
+    }
+
+    async function toggleAutoEmail() {
+      const next = !emailAutoEnabled;
+      emailAutoEnabled = next;
+      localStorage.setItem('sentinela_email_auto_enabled', String(next));
+      renderAutoEmailButton();
+      try {
+        const res = await fetch('api/index.php?action=set_settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email_auto_enabled: next })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        showToast(next ? 'Envio automático de e-mails ATIVADO.' : 'Envio automático de e-mails DESATIVADO.');
+      } catch {
+        showToast('Estado salvo localmente (API offline).');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, s => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[s]));
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch('api/index.php?action=list');
+        if (res.ok) {
+          store = await res.json();
+        } else {
+          throw new Error('Fallback JSON');
+        }
+      } catch {
+        const res = await fetch('data/ocorrencias.json');
+        store = await res.json();
+        const localSaved = localStorage.getItem('sentinela_diario_store');
+        if (localSaved) {
+          try {
+            const parsed = JSON.parse(localSaved);
+            if (parsed && Array.isArray(parsed.ocorrencias) && parsed.ocorrencias.length) {
+              store = parsed;
+            }
+          } catch {}
+        }
+      }
+      populateFileFilter();
+      renderAll();
+    }
+
+    async function saveStore() {
+      try { localStorage.setItem('sentinela_diario_store', JSON.stringify(store)); } catch {}
+      try {
+        const res = await fetch('api/index.php?action=save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(store)
+        });
+        if (res.ok) {
+          showToast('Alterações salvas em data/ocorrencias.json');
+        }
+      } catch {
+        showToast('Alterações salvas localmente no navegador.');
+      }
+    }
+
+    function populateFileFilter() {
+      const sel = document.getElementById('filterFile');
+      const current = sel.value;
+      sel.innerHTML = '<option value="all">Edição / PDF: Todos</option>';
+      (store.arquivos_analisados || []).forEach(f => {
+        const opt = document.createElement('option');
+        opt.value = f;
+        opt.textContent = f;
+        sel.appendChild(opt);
+      });
+      sel.value = current || 'all';
+    }
+
+    function getFiltered() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const prio = document.getElementById('filterPrio').value;
+      const st = document.getElementById('filterStatus').value;
+      const file = document.getElementById('filterFile').value;
+
+      return (store.ocorrencias || []).filter(o => {
+        if (prio !== 'all' && o.prioridade !== prio) return false;
+        if (st !== 'all' && o.status !== st) return false;
+        if (file !== 'all' && o.arquivo_pdf !== file) return false;
+        if (q) {
+          const hay = [
+            o.empresa, o.razao_social_oficial, o.cnpj, o.objeto, o.tipo_ato,
+            (o.emails || []).map(e => e.email).join(' ')
+          ].join(' ').toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function renderStats() {
+      const all = store.ocorrencias || [];
+      const alta = all.filter(o => o.prioridade === 'alta').length;
+      const media = all.filter(o => o.prioridade === 'media').length;
+      const comEmail = all.filter(o => (o.emails || []).length > 0 && o.prioridade !== 'descartar').length;
+      const enviados = all.filter(o => o.status === 'enviado' || o.status === 'respondeu').length;
+
+      document.getElementById('metaSummary').textContent =
+        `${all.length} ocorrências • ${(store.arquivos_analisados || []).length} PDFs analisados`;
+
+      document.getElementById('statsGrid').innerHTML = `
+        <div class="stat-card"><div class="stat-label">Total Extraído</div><div class="stat-value">${all.length}</div></div>
+        <div class="stat-card"><div class="stat-label">Prioridade Alta</div><div class="stat-value" style="color:#dc2626">${alta}</div></div>
+        <div class="stat-card"><div class="stat-label">Prioridade Média</div><div class="stat-value" style="color:#d97706">${media}</div></div>
+        <div class="stat-card"><div class="stat-label">Com E-mail Encontrado</div><div class="stat-value" style="color:#059669">${comEmail}</div></div>
+        <div class="stat-card"><div class="stat-label">E-mails Enviados</div><div class="stat-value" style="color:#2563eb">${enviados}</div></div>
+      `;
+    }
+
+    function renderList() {
+      const list = getFiltered();
+      const el = document.getElementById('occList');
+      if (!list.length) {
+        el.innerHTML = '<div class="occ-card">Nenhuma ocorrência encontrada para os filtros atuais.</div>';
+        return;
+      }
+      if (!selectedId || !list.some(o => o.id === selectedId)) {
+        selectedId = list[0].id;
+      }
+      el.innerHTML = list.map(o => {
+        const emailCount = (o.emails || []).length;
+        const nome = o.razao_social_oficial || o.empresa;
+        return `
+          <div class="occ-card ${o.id === selectedId ? 'active' : ''}" onclick="selectItem('${o.id}')">
+            <div class="occ-top">
+              <span class="badge prio-${o.prioridade}">${o.prioridade}</span>
+              <span class="badge st-${o.status}">${o.status}</span>
+            </div>
+            <div class="occ-title">${escapeHtml(nome)}</div>
+            <div class="occ-sub">
+              <span>Ed. ${escapeHtml(o.edicao || '-')} • Pág. ${o.pagina}</span>
+              <span>${emailCount ? `✉️ ${emailCount} e-mail(s)` : 'Sem e-mail'}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectItem(id) {
+      selectedId = id;
+      renderList();
+      renderDetail();
+    }
+
+    function renderDetail() {
+      const item = (store.ocorrencias || []).find(o => o.id === selectedId);
+      const pane = document.getElementById('detailPane');
+      if (!item) {
+        pane.innerHTML = '<p style="color:var(--muted);">Selecione uma ocorrência.</p>';
+        return;
+      }
+
+      const nome = item.razao_social_oficial || item.empresa;
+      const qSearch = encodeURIComponent(`"${nome}" ${item.cnpj || ''} email contato`);
+      const qCasa = encodeURIComponent(item.cnpj ? item.cnpj.replace(/\D/g, '') : nome);
+
+      const emailsHtml = (item.emails || []).map((em, idx) => {
+        const checked = (item.emails_selecionados || []).includes(em.email) ? 'checked' : '';
+        return `
+          <div class="email-item">
+            <label>
+              <input type="checkbox" ${checked} onchange="toggleEmail('${escapeHtml(em.email)}', this.checked)" />
+              <span>${escapeHtml(em.email)}</span>
+            </label>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="email-source">${escapeHtml(em.fonte || 'Manual')}</span>
+              <button class="btn btn-light btn-sm" onclick="removeEmail(${idx})">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('') || '<p style="font-size:0.84rem;color:var(--muted);margin-bottom:8px;">Nenhum e-mail encontrado ainda. Use os botões de busca ao lado ou adicione manualmente abaixo.</p>';
+
+      pane.innerHTML = `
+        <div class="detail-header">
+          <div>
+            <div style="display:flex;gap:8px;margin-bottom:6px;">
+              <span class="badge prio-${item.prioridade}">${item.prioridade}</span>
+              <span class="badge st-${item.status}">${item.status}</span>
+            </div>
+            <h2>${escapeHtml(nome)}</h2>
+            <p style="font-size:0.84rem;color:var(--slate);margin-top:4px;">
+              ${escapeHtml(item.gancho || item.motivo_descarte || '')}
+            </p>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <select onchange="updateStatus(this.value)" style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);font-weight:600;">
+              <option value="pendente" ${item.status === 'pendente' ? 'selected' : ''}>Pendente</option>
+              <option value="enviado" ${item.status === 'enviado' ? 'selected' : ''}>E-mail Enviado</option>
+              <option value="respondeu" ${item.status === 'respondeu' ? 'selected' : ''}>Respondeu</option>
+              <option value="descartado" ${item.status === 'descartado' ? 'selected' : ''}>Descartado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="meta-grid">
+          <div class="meta-item"><strong>Ato Publicado</strong>${escapeHtml(item.tipo_ato)}</div>
+          <div class="meta-item"><strong>Edição / Data / Página</strong>Ed. ${escapeHtml(item.edicao || '-')} (${escapeHtml(item.data_publicacao || '-')}) — Pág. ${item.pagina}</div>
+          <div class="meta-item"><strong>Valor</strong>${escapeHtml(item.valor || 'Não informado')}</div>
+          <div class="meta-item"><strong>Situação / Cidade</strong>${escapeHtml(item.situacao_cadastral || '-')} • ${escapeHtml(item.municipio || '-')}/${escapeHtml(item.uf || '-')}</div>
+          <div class="meta-item"><strong>Telefone</strong>${escapeHtml(item.telefone || 'Não informado')}</div>
+          <div class="meta-item"><strong>CNAE Principal</strong>${escapeHtml(item.cnae || 'Consultar CNPJ')}</div>
+        </div>
+
+        <div class="section-box">
+          <h3>
+            <span>1. CNPJ e Consulta Cadastral</span>
+            <div style="display:flex;gap:6px;">
+              <a class="btn btn-light btn-sm" target="_blank" href="https://www.google.com/search?q=${qSearch}">Buscar no Google ↗</a>
+              <a class="btn btn-light btn-sm" target="_blank" href="https://casadosdados.com.br/solucao/cnpj?q=${qCasa}">Casa dos Dados ↗</a>
+            </div>
+          </h3>
+          <div class="cnpj-row">
+            <input type="text" id="cnpjInput" value="${escapeHtml(item.cnpj || '')}" placeholder="00.000.000/0001-00" />
+            <button class="btn btn-light btn-sm" onclick="lookupCnpj()">Consultar BrasilAPI</button>
+          </div>
+          ${(item.socios && item.socios.length) ? `<div style="font-size:0.82rem;color:var(--slate);"><b>Sócios (QSA):</b> ${escapeHtml(item.socios.join(', '))}</div>` : ''}
+        </div>
+
+        <div class="section-box">
+          <h3><span>2. E-mails da Empresa (selecione 1 ou mais destinatários)</span></h3>
+          <div class="email-list">${emailsHtml}</div>
+          <div class="add-email-row">
+            <input type="email" id="newEmailInput" placeholder="Adicionar outro e-mail (ex: financeiro@empresa.com.br)" />
+            <button class="btn btn-light btn-sm" onclick="addEmail()">+ Adicionar</button>
+          </div>
+        </div>
+
+        <div class="section-box">
+          <h3>
+            <span>3. Texto do E-mail Gerado</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn btn-light btn-sm" onclick="copyText('assuntoInput', 'Assunto copiado!')">Copiar Assunto</button>
+              <button class="btn btn-light btn-sm" onclick="copyText('corpoInput', 'Texto copiado!')">Copiar Texto</button>
+              <button class="btn btn-primary btn-sm" onclick="sendMailto()">Abrir no E-mail (mailto) ↗</button>
+            </div>
+          </h3>
+          <label class="field-label" for="assuntoInput">Assunto</label>
+          <input type="text" class="text-input" id="assuntoInput" value="${escapeHtml(item.assunto_email || '')}" onchange="updateEmailField('assunto_email', this.value)" />
+          <label class="field-label" for="corpoInput">Mensagem</label>
+          <textarea id="corpoInput" onchange="updateEmailField('texto_email', this.value)">${escapeHtml(item.texto_email || '')}</textarea>
+        </div>
+
+        <div class="section-box">
+          <h3><span>Objeto e Trecho Original do Diário Oficial</span></h3>
+          <div class="trecho-box">
+            <strong>Objeto:</strong> ${escapeHtml(item.objeto)}<br /><br />
+            <strong>Trecho extraído (${escapeHtml(item.arquivo_pdf)}):</strong> ${escapeHtml(item.trecho)}
+          </div>
+        </div>
+      `;
+    }
+
+    function currentItem() {
+      return (store.ocorrencias || []).find(o => o.id === selectedId);
+    }
+
+    function updateStatus(val) {
+      const it = currentItem();
+      if (!it) return;
+      it.status = val;
+      renderAll();
+      saveStore();
+    }
+
+    function updateEmailField(field, val) {
+      const it = currentItem();
+      if (!it) return;
+      it[field] = val;
+      saveStore();
+    }
+
+    function toggleEmail(email, checked) {
+      const it = currentItem();
+      if (!it) return;
+      it.emails_selecionados = it.emails_selecionados || [];
+      if (checked && !it.emails_selecionados.includes(email)) {
+        it.emails_selecionados.push(email);
+      } else if (!checked) {
+        it.emails_selecionados = it.emails_selecionados.filter(e => e !== email);
+      }
+      saveStore();
+    }
+
+    function addEmail() {
+      const it = currentItem();
+      const inp = document.getElementById('newEmailInput');
+      const val = (inp.value || '').trim();
+      if (!it || !val) return;
+      it.emails = it.emails || [];
+      it.emails_selecionados = it.emails_selecionados || [];
+      if (!it.emails.some(e => e.email.toLowerCase() === val.toLowerCase())) {
+        it.emails.push({ email: val, fonte: 'Adicionado manualmente' });
+        it.emails_selecionados.push(val);
+      }
+      renderDetail();
+      renderStats();
+      saveStore();
+    }
+
+    function removeEmail(idx) {
+      const it = currentItem();
+      if (!it) return;
+      const removed = it.emails.splice(idx, 1)[0];
+      if (removed) {
+        it.emails_selecionados = (it.emails_selecionados || []).filter(e => e !== removed.email);
+      }
+      renderDetail();
+      renderStats();
+      saveStore();
+    }
+
+    async function lookupCnpj() {
+      const it = currentItem();
+      const raw = document.getElementById('cnpjInput').value.trim();
+      const digits = raw.replace(/\D/g, '');
+      if (digits.length !== 14) {
+        showToast('Informe um CNPJ válido com 14 dígitos.');
+        return;
+      }
+      showToast('Consultando BrasilAPI...');
+      try {
+        let res = await fetch(`api/index.php?action=lookup_cnpj&cnpj=${digits}`);
+        if (!res.ok) {
+          res = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${digits}`);
+        }
+        if (!res.ok) throw new Error('Erro na consulta');
+        const data = await res.json();
+        it.cnpj = digits.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+        it.razao_social_oficial = data.razao_social || it.razao_social_oficial;
+        it.situacao_cadastral = data.descricao_situacao_cadastral || it.situacao_cadastral;
+        it.municipio = data.municipio || it.municipio;
+        it.uf = data.uf || it.uf;
+        it.cnae = data.cnae_fiscal_descricao || it.cnae;
+        if (data.ddd_telefone_1) it.telefone = data.ddd_telefone_1;
+        if (data.qsa) it.socios = data.qsa.map(s => s.nome_socio).filter(Boolean);
+        if (data.email) {
+          const em = data.email.trim().toLowerCase();
+          it.emails = it.emails || [];
+          it.emails_selecionados = it.emails_selecionados || [];
+          if (em && !it.emails.some(e => e.email.toLowerCase() === em)) {
+            it.emails.push({ email: em, fonte: 'Receita Federal / BrasilAPI' });
+            it.emails_selecionados.push(em);
+          }
+        }
+        renderAll();
+        saveStore();
+        showToast('CNPJ atualizado com dados da Receita!');
+      } catch {
+        showToast('Não foi possível consultar o CNPJ agora.');
+      }
+    }
+
+    function copyText(id, msg) {
+      const el = document.getElementById(id);
+      navigator.clipboard.writeText(el.value);
+      showToast(msg);
+    }
+
+    function sendMailto() {
+      const it = currentItem();
+      if (!it) return;
+      const to = (it.emails_selecionados || []).join(',');
+      if (!to) {
+        showToast('Selecione ou adicione pelo menos 1 e-mail destinatário.');
+        return;
+      }
+      const subject = encodeURIComponent(document.getElementById('assuntoInput').value);
+      const body = encodeURIComponent(document.getElementById('corpoInput').value);
+      it.status = 'enviado';
+      renderAll();
+      saveStore();
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    }
+
+    function renderAll() {
+      renderStats();
+      renderList();
+      renderDetail();
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderList);
+    document.getElementById('filterPrio').addEventListener('change', renderList);
+    document.getElementById('filterStatus').addEventListener('change', renderList);
+    document.getElementById('filterFile').addEventListener('change', renderList);
+
+    document.getElementById('btnAnalyze').addEventListener('click', async () => {
+      showToast('Analisando PDFs em dou-sj/...');
+      try {
+        const res = await fetch('api/index.php?action=analyze&enrich=1', { method: 'POST' });
+        store = await res.json();
+        populateFileFilter();
+        renderAll();
+        showToast(`Análise concluída: ${store.total} ocorrências.`);
+      } catch {
+        showToast('Erro ao executar analisador via PHP. Rode python analyzer/analisar_dou.py.');
+      }
+    });
+
+    document.getElementById('pdfUpload').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const fd = new FormData();
+      fd.append('pdf', file);
+      showToast(`Enviando ${file.name} e analisando...`);
+      try {
+        const res = await fetch('api/index.php?action=upload', { method: 'POST', body: fd });
+        store = await res.json();
+        populateFileFilter();
+        renderAll();
+        showToast(`${file.name} analisado com sucesso!`);
+      } catch {
+        showToast('Erro ao enviar PDF. Verifique se o Apache/PHP está rodando.');
+      }
+      e.target.value = '';
+    });
+
+    document.getElementById('btnToggleAutoEmail').addEventListener('click', toggleAutoEmail);
+
+    loadSettings();
+    loadData();
+  </script>
+</body>
+</html>

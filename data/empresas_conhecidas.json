@@ -1,0 +1,185 @@
+{
+  "by_cnpj": {
+    "34.483.180/0001-21": {
+      "razao_social": "CONSTRUTORA TOCANTINS INDUSTRIA E COMERCIO LTDA",
+      "cnpj": "34.483.180/0001-21",
+      "situacao": "Ativa",
+      "municipio": "Manaus",
+      "uf": "AM",
+      "telefone": "(92) 99909-7043",
+      "emails": [
+        { "email": "tocantinsam@gmail.com", "fonte": "Cadastro CNPJ / CNPJa" }
+      ]
+    },
+    "28.197.147/0001-32": {
+      "razao_social": "DHR MORAES ENGENHARIA LTDA",
+      "cnpj": "28.197.147/0001-32",
+      "situacao": "Ativa",
+      "municipio": "São José dos Campos",
+      "uf": "SP",
+      "telefone": "(12) 3937-5580",
+      "emails": []
+    },
+    "28.786.644/0001-76": {
+      "razao_social": "ANA & ROSA COMERCIO DE CARNES LTDA",
+      "nome_fantasia": "Rei da Carne",
+      "cnpj": "28.786.644/0001-76",
+      "situacao": "Ativa",
+      "municipio": "São José dos Campos",
+      "uf": "SP",
+      "telefone": "(12) 3302-3397",
+      "emails": []
+    },
+    "65.032.191/0001-19": {
+      "razao_social": "65.032.191 JOAB SANTANA DA SILVA",
+      "cnpj": "65.032.191/0001-19",
+      "situacao": "Ativa",
+      "municipio": "São José dos Campos",
+      "uf": "SP",
+      "telefone": "",
+      "emails": []
+    },
+    "50.862.026/0001-17": {
+      "razao_social": "VINICIUS DE ABREU MAZZOLIN (GRANJA OLHO D'AGUA)",
+      "cnpj": "50.862.026/0001-17",
+      "situacao": "Ativa",
+      "municipio": "São José dos Campos",
+      "uf": "SP",
+      "telefone": "(11) 8017-4570",
+      "emails": []
+    },
+    "57.334.195/0001-23": {
+      "razao_social": "POS-DADOS COMERCIO E SERVICOS DE ASSISTENCIA TECNICA LTDA",
+      "cnpj": "57.334.195/0001-23",
+      "situacao": "Ativa",
+      "municipio": "Atibaia",
+      "uf": "SP",
+      "telefone": "(11) 3402-2365",
+      "emails": [
+        { "email": "vendas@posdados.com.br", "fonte": "Portal da Transparência" }
+      ]
+    },
+    "26.844.478/0001-91": {
+      "razao_social": "DISTRIBUIDORA BRAZLIMP LTDA",
+      "cnpj": "26.844.478/0001-91",
+      "situacao": "Ativa",
+      "municipio": "Volta Redonda",
+      "uf": "RJ",
+      "telefone": "",
+      "emails": [
+        { "email": "vendas@brazlimp.com", "fonte": "Licitações Públicas / Volta Redonda" }
+      ]
+    },
+    "11.311.773/0001-05": {
+      "razao_social": "OKEY-MED DISTRIBUIDORA DE MEDICAMENTOS HOSPITALARES ODONTOLOGICOS IMPORTACOES E EXPORTACOES LTDA",
+      "cnpj": "11.311.773/0001-05",
+      "situacao": "Ativa",
+      "municipio": "Itabuna",
+      "uf": "BA",
+      "telefone": "(73) 3215-5429",
+      "emails": [
+        { "email": "okeymed@okeymed.com.br", "fonte": "Site Oficial (okeymed.com.br)" }
+      ]
+    },
+    "05.847.630/0001-10": {
+      "razao_social": "SOMA/SP PRODUTOS HOSPITALARES LTDA",
+      "cnpj": "05.847.630/0001-10",
+      "situacao": "Ativa",
+      "municipio": "São Bernardo do Campo",
+      "uf": "SP",
+      "telefone": "(11) 4122-9800",
+      "emails": [
+        { "email": "licitacao.sp@somahospitalar.com.br", "fonte": "Edital/Licitações Públicas" },
+        { "email": "contabilidade.sp@somahospitalar.com.br", "fonte": "Cadastro CNPJ / CNPJa" }
+      ]
+    },
+    "05.340.254/0001-72": {
+      "razao_social": "FOUR INFO DESENVOLVIMENTO DE SOFTWARE LTDA EPP",
+      "cnpj": "05.340.254/0001-72",
+      "situacao": "Ativa",
+      "municipio": "Morro Agudo",
+      "uf": "SP",
+      "telefone": "(16) 3851-5432",
+      "emails": [
+        { "email": "suporte@fourinfo.com.br", "fonte": "Site Oficial (fourinfo.com.br)" }
+      ]
+    },
+    "57.464.289/0001-17": {
+      "razao_social": "HEALTH LIFE SOLUCOES MEDICAS E ORTOPEDICAS LTDA",
+      "nome_fantasia": "Health Life Solutions",
+      "cnpj": "57.464.289/0001-17",
+      "situacao": "Ativa",
+      "municipio": "Belo Horizonte",
+      "uf": "MG",
+      "telefone": "(31) 99795-0166",
+      "emails": [
+        { "email": "health.lifesolucions@gmail.com", "fonte": "Cadastro Público / ListaPA" }
+      ]
+    },
+    "06.065.895/0001-29": {
+      "razao_social": "S G M K LOCACOES LTDA",
+      "cnpj": "06.065.895/0001-29",
+      "situacao": "Ativa",
+      "municipio": "Jacareí",
+      "uf": "SP",
+      "telefone": "",
+      "emails": [
+        { "email": "central@sgmk.com.br", "fonte": "Cadastro CNPJ / CNPJa" },
+        { "email": "adm@atcontabil.com.br", "fonte": "Contabilidade Associada (CNPJa)" }
+      ]
+    },
+    "09.083.327/0001-49": {
+      "razao_social": "FREDERICO CARVALHO MAZOLINI & CIA LTDA",
+      "nome_fantasia": "HP Engenharia",
+      "cnpj": "09.083.327/0001-49",
+      "situacao": "Ativa",
+      "municipio": "Campinas",
+      "uf": "SP",
+      "telefone": "",
+      "emails": [
+        { "email": "contato@hpeng.com.br", "fonte": "Documentos de Licitação" },
+        { "email": "fredmazolini@hotmail.com", "fonte": "Cadastro / Licitações Públicas" }
+      ]
+    },
+    "43.548.244/0001-16": {
+      "razao_social": "MAX PHARMA COMERCIO LTDA",
+      "cnpj": "43.548.244/0001-16",
+      "situacao": "Ativa",
+      "municipio": "Barra Mansa",
+      "uf": "RJ",
+      "telefone": "",
+      "emails": [
+        { "email": "maxpharma.empdistribuidora@gmail.com", "fonte": "PNCP / Licitações Públicas" }
+      ]
+    },
+    "05.334.864/0001-63": {
+      "razao_social": "NIPCABLE DO BRASIL TELECOM LTDA",
+      "cnpj": "05.334.864/0001-63",
+      "situacao": "Ativa",
+      "municipio": "São José dos Campos",
+      "uf": "SP",
+      "telefone": "(12) 2138-8000",
+      "emails": [
+        { "email": "financeiro@nipbr.com.br", "fonte": "ACISJC / Cadastro Empresarial" },
+        { "email": "nfe@nipbr.com.br", "fonte": "Portal da Transparência" }
+      ]
+    }
+  },
+  "name_aliases": {
+    "CONSTRUTORA TOCANTINS": "34.483.180/0001-21",
+    "DHR MORAES": "28.197.147/0001-32",
+    "POS-DADOS": "57.334.195/0001-23",
+    "PÓS-DADOS": "57.334.195/0001-23",
+    "DISTRIBUIDORA BRAZLIMP": "26.844.478/0001-91",
+    "OKEY-MED": "11.311.773/0001-05",
+    "SOMA/SP": "05.847.630/0001-10",
+    "FOUR INFO": "05.340.254/0001-72",
+    "HEALTH LIFE": "57.464.289/0001-17",
+    "SGMK": "06.065.895/0001-29",
+    "S G M K": "06.065.895/0001-29",
+    "GRANJA OLHO": "50.862.026/0001-17",
+    "FREDERICO CARVALHO MAZOLINI": "09.083.327/0001-49",
+    "MAX PHARMA": "43.548.244/0001-16",
+    "NIPCABLE": "05.334.864/0001-63"
+  }
+}
