@@ -450,27 +450,37 @@
   <footer>
     <div class="container footer-inner">
       <span>© 2026 Sentinela Diário — Monitoramento de Diários Oficiais.</span>
-      <a href="painel.html" style="color:var(--slate); font-weight:600;">Painel de Análise e Prospecção →</a>
     </div>
   </footer>
 
   <script>
-    document.getElementById('trialForm').addEventListener('submit', function (e) {
+    document.getElementById('trialForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       const empresa = document.getElementById('empresa').value.trim();
       const nome = document.getElementById('nome').value.trim();
       const contato = document.getElementById('contato').value.trim();
       const feedback = document.getElementById('formFeedback');
+      const btn = this.querySelector('button[type="submit"]');
 
-      const subject = encodeURIComponent(`Teste 15 dias grátis — ${empresa}`);
-      const body = encodeURIComponent(
-        `Olá!\n\nGostaria de ativar o teste gratuito de 15 dias do Sentinela Diário.\n\n` +
-        `• Empresa/CNPJ: ${empresa}\n` +
-        `• Nome: ${nome}\n` +
-        `• WhatsApp/E-mail para alertas: ${contato}\n`
-      );
-      feedback.innerHTML = `<span style="color:#059669;font-weight:600;">Solicitação preparada!</span> Abrindo seu cliente de e-mail...`;
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      btn.disabled = true;
+      btn.textContent = 'Ativando...';
+      feedback.textContent = 'Registrando seu monitoramento...';
+
+      try {
+        const res = await fetch('api/index.php?action=register_lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ empresa, nome, contato })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        feedback.innerHTML = `<span style="color:#059669;font-weight:600;">Cadastro confirmado!</span> Seu monitoramento gratuito de 15 dias foi ativado.`;
+        this.reset();
+      } catch {
+        feedback.innerHTML = `<span style="color:#b91c1c;font-weight:600;">Não foi possível registrar agora.</span> Tente novamente em instantes.`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Solicitar teste grátis de 15 dias';
+      }
     });
   </script>
 </body>
