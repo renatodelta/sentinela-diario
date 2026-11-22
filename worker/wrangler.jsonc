@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sentinela-diario-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-01-01",
+  "kv_namespaces": [
+    {
+      "binding": "SENTINELA_KV",
+      "id": "214b90ade1ec46289f6f5164394e3693"
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "sentineladiario.com/api/*",
+      "zone_name": "sentineladiario.com"
+    },
+    {
+      "pattern": "www.sentineladiario.com/api/*",
+      "zone_name": "sentineladiario.com"
+    }
+  ]
+}
