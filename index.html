@@ -467,7 +467,7 @@
       feedback.textContent = 'Registrando seu monitoramento...';
 
       try {
-        const res = await fetch('api/index.php?action=register_lead', {
+        const res = await fetch('/api/leads', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ empresa, nome, contato })

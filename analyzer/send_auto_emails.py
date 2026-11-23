@@ -163,6 +163,7 @@ def send_pending_emails(dry_run: bool = False, respect_settings: bool = True) ->
         payload = {
             "from": sender,
             "to": recipients,
+            "reply_to": COPY_TO_EMAIL,
             "subject": subject,
             "text": body_text + SIGNATURE_TEXT,
             "html": text_to_html(body_text) + SIGNATURE_HTML,

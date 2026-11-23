@@ -187,6 +187,7 @@ HTML;
     $payload = [
         'from' => !empty($body['from']) ? $body['from'] : $defaultFrom,
         'to' => $toList,
+        'reply_to' => $copyEmail,
         'subject' => $body['subject'],
     ];
     if (!in_array(strtolower($copyEmail), array_map('strtolower', $toList), true)) {

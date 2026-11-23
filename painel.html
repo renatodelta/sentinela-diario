@@ -190,9 +190,46 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); display: none; z-index: 60;
     }
 
+    .tabs-bar {
+      display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 10px 18px; border-radius: 10px; border: 1px solid var(--border);
+      background: #fff; color: var(--slate); font-weight: 700; font-size: 0.88rem;
+      cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .tab-btn.active {
+      background: var(--navy); color: #fff; border-color: var(--navy);
+    }
+    .tab-badge {
+      background: var(--emerald); color: #fff; border-radius: 999px;
+      padding: 2px 8px; font-size: 0.72rem; font-weight: 800;
+    }
+    .leads-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px; margin-bottom: 18px;
+    }
+    .leads-form {
+      display: grid; grid-template-columns: 1.4fr 1fr 1.2fr auto; gap: 10px; align-items: center;
+    }
+    .leads-form input {
+      padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.86rem; font-family: inherit;
+    }
+    .leads-table {
+      width: 100%; border-collapse: collapse; font-size: 0.86rem;
+    }
+    .leads-table th {
+      text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border);
+      color: var(--muted); font-size: 0.75rem; text-transform: uppercase;
+    }
+    .leads-table td {
+      padding: 12px; border-bottom: 1px solid var(--border); vertical-align: middle;
+    }
     @media (max-width: 980px) {
       .workspace { grid-template-columns: 1fr; }
       .list-col { max-height: 360px; }
+      .leads-form { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -218,33 +255,67 @@
   </header>
 
   <div class="container">
-    <div class="stats-grid" id="statsGrid"></div>
-
-    <div class="toolbar">
-      <input type="text" id="searchInput" placeholder="Buscar por empresa, CNPJ, objeto, contrato ou e-mail..." />
-      <select id="filterPrio">
-        <option value="all">Prioridade: Todas</option>
-        <option value="alta">Alta</option>
-        <option value="media">Média</option>
-        <option value="baixa">Baixa</option>
-        <option value="descartar">Descartadas (Estatais/OS)</option>
-      </select>
-      <select id="filterStatus">
-        <option value="all">Status: Todos</option>
-        <option value="pendente">Pendente</option>
-        <option value="enviado">E-mail Enviado</option>
-        <option value="respondeu">Respondeu</option>
-        <option value="descartado">Descartado</option>
-      </select>
-      <select id="filterFile">
-        <option value="all">Edição / PDF: Todos</option>
-      </select>
+    <div class="tabs-bar">
+      <button class="tab-btn active" id="tabBtnOcorrencias" onclick="switchTab('ocorrencias')">
+        Ocorrências do Diário (DOU SJC)
+      </button>
+      <button class="tab-btn" id="tabBtnLeads" onclick="switchTab('leads')">
+        Contatos &amp; CNPJs Monitorados
+        <span class="tab-badge" id="leadsCountBadge">0</span>
+      </button>
     </div>
 
-    <div class="workspace">
-      <div class="list-col" id="occList"></div>
-      <div class="detail-col" id="detailPane">
-        <p style="color:var(--muted);">Selecione uma ocorrência à esquerda para tratar os dados, consultar o CNPJ e enviar o e-mail.</p>
+    <div id="tabOcorrencias">
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Buscar por empresa, CNPJ, objeto, contrato ou e-mail..." />
+        <select id="filterPrio">
+          <option value="all">Prioridade: Todas</option>
+          <option value="alta">Alta</option>
+          <option value="media">Média</option>
+          <option value="baixa">Baixa</option>
+          <option value="descartar">Descartadas (Estatais/OS)</option>
+        </select>
+        <select id="filterStatus">
+          <option value="all">Status: Todos</option>
+          <option value="pendente">Pendente</option>
+          <option value="enviado">E-mail Enviado</option>
+          <option value="respondeu">Respondeu</option>
+          <option value="descartado">Descartado</option>
+        </select>
+        <select id="filterFile">
+          <option value="all">Edição / PDF: Todos</option>
+        </select>
+      </div>
+
+      <div class="workspace">
+        <div class="list-col" id="occList"></div>
+        <div class="detail-col" id="detailPane">
+          <p style="color:var(--muted);">Selecione uma ocorrência à esquerda para tratar os dados, consultar o CNPJ e enviar o e-mail.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tabLeads" style="display:none;">
+      <div class="stats-grid" id="leadsStatsGrid"></div>
+
+      <div class="leads-card">
+        <h3 style="font-size:0.95rem;margin-bottom:12px;">Cadastrar Empresa / CNPJ manualmente para monitoramento</h3>
+        <div class="leads-form">
+          <input type="text" id="manualLeadEmpresa" placeholder="Nome da Empresa ou CNPJ (ex: 00.000.000/0001-00)" />
+          <input type="text" id="manualLeadNome" placeholder="Nome do contato / responsável" />
+          <input type="text" id="manualLeadContato" placeholder="WhatsApp ou E-mail" />
+          <button class="btn btn-primary" onclick="addManualLead()">+ Cadastrar</button>
+        </div>
+      </div>
+
+      <div class="leads-card" style="overflow-x:auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;flex-wrap:wrap;">
+          <h3 style="font-size:0.95rem;">Empresas Cadastradas (Landing Page e Manual)</h3>
+          <button class="btn btn-light btn-sm" onclick="loadLeads()">Atualizar Lista</button>
+        </div>
+        <div id="leadsTableWrap">Carregando cadastros...</div>
       </div>
     </div>
   </div>
@@ -776,8 +847,171 @@
 
     document.getElementById('btnToggleAutoEmail').addEventListener('click', toggleAutoEmail);
 
+    let leadsList = [];
+
+    function switchTab(tab) {
+      const isOcc = tab === 'ocorrencias';
+      document.getElementById('tabOcorrencias').style.display = isOcc ? 'block' : 'none';
+      document.getElementById('tabLeads').style.display = isOcc ? 'none' : 'block';
+      document.getElementById('tabBtnOcorrencias').classList.toggle('active', isOcc);
+      document.getElementById('tabBtnLeads').classList.toggle('active', !isOcc);
+      if (!isOcc) loadLeads();
+    }
+
+    async function loadLeads() {
+      try {
+        const res = await fetch('/api/leads?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        leadsList = Array.isArray(data.leads) ? data.leads : [];
+        localStorage.setItem('sentinela_leads_cache', JSON.stringify(leadsList));
+      } catch {
+        try {
+          leadsList = JSON.parse(localStorage.getItem('sentinela_leads_cache') || '[]');
+        } catch {
+          leadsList = [];
+        }
+      }
+      renderLeads();
+    }
+
+    function renderLeads() {
+      const badge = document.getElementById('leadsCountBadge');
+      if (badge) badge.textContent = leadsList.length;
+
+      const ativos = leadsList.filter(l => l.status === 'ativo').length;
+      const contatados = leadsList.filter(l => l.status === 'contatado' || l.status === 'convertido').length;
+      const statsEl = document.getElementById('leadsStatsGrid');
+      if (statsEl) {
+        statsEl.innerHTML = `
+          <div class="stat-card"><div class="stat-label">Total Cadastrados</div><div class="stat-value">${leadsList.length}</div></div>
+          <div class="stat-card"><div class="stat-label">Em Teste / Monitorando</div><div class="stat-value" style="color:#059669">${ativos}</div></div>
+          <div class="stat-card"><div class="stat-label">Contatados / Clientes</div><div class="stat-value" style="color:#2563eb">${contatados}</div></div>
+        `;
+      }
+
+      const wrap = document.getElementById('leadsTableWrap');
+      if (!wrap) return;
+      if (!leadsList.length) {
+        wrap.innerHTML = '<p style="color:var(--muted);font-size:0.86rem;">Nenhum cadastro encontrado ainda. Quando uma empresa preencher o formulário na landing page, ela aparecerá aqui.</p>';
+        return;
+      }
+
+      wrap.innerHTML = `
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th>Empresa / CNPJ</th>
+              <th>Responsável</th>
+              <th>Contato (WhatsApp / E-mail)</th>
+              <th>Cadastro</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${leadsList.map(l => {
+              const dt = l.criado_em ? l.criado_em.slice(0, 16).replace('T', ' ') : '-';
+              const queryTerm = l.cnpj || l.empresa;
+              return `
+                <tr>
+                  <td>
+                    <strong>${escapeHtml(l.empresa)}</strong>
+                    ${l.cnpj ? `<div style="font-size:0.78rem;color:var(--muted);">CNPJ: ${escapeHtml(l.cnpj)}</div>` : ''}
+                  </td>
+                  <td>${escapeHtml(l.nome)}</td>
+                  <td>${escapeHtml(l.contato)}</td>
+                  <td style="font-size:0.78rem;color:var(--muted);">${escapeHtml(dt)}</td>
+                  <td>
+                    <select onchange="updateLeadStatus('${escapeHtml(l.id)}', this.value)" style="padding:6px 8px;border-radius:6px;border:1px solid var(--border);font-size:0.8rem;font-weight:600;">
+                      <option value="ativo" ${l.status === 'ativo' ? 'selected' : ''}>Ativo (Monitorando)</option>
+                      <option value="contatado" ${l.status === 'contatado' ? 'selected' : ''}>Contatado</option>
+                      <option value="convertido" ${l.status === 'convertido' ? 'selected' : ''}>Cliente Pago</option>
+                      <option value="pausado" ${l.status === 'pausado' ? 'selected' : ''}>Pausado</option>
+                    </select>
+                  </td>
+                  <td>
+                    <div style="display:flex;gap:6px;">
+                      <button class="btn btn-light btn-sm" onclick="searchLeadInOccurrences('${escapeHtml(queryTerm)}')">Ver no Diário</button>
+                      <button class="btn btn-light btn-sm" onclick="deleteLead('${escapeHtml(l.id)}')">✕</button>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    async function addManualLead() {
+      const empresa = document.getElementById('manualLeadEmpresa').value.trim();
+      const nome = document.getElementById('manualLeadNome').value.trim();
+      const contato = document.getElementById('manualLeadContato').value.trim();
+      if (!empresa || !nome || !contato) {
+        showToast('Preencha empresa/CNPJ, nome e contato.');
+        return;
+      }
+      try {
+        const res = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ empresa, nome, contato, origem: 'manual' })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erro ao cadastrar');
+        document.getElementById('manualLeadEmpresa').value = '';
+        document.getElementById('manualLeadNome').value = '';
+        document.getElementById('manualLeadContato').value = '';
+        showToast('Empresa cadastrada para monitoramento!');
+        loadLeads();
+      } catch (err) {
+        showToast(`Erro ao cadastrar: ${err.message}`);
+      }
+    }
+
+    async function updateLeadStatus(id, status) {
+      try {
+        const res = await fetch('/api/leads', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, status })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const target = leadsList.find(l => l.id === id);
+        if (target) target.status = status;
+        renderLeads();
+        showToast('Status do contato atualizado!');
+      } catch {
+        showToast('Não foi possível atualizar o status.');
+      }
+    }
+
+    async function deleteLead(id) {
+      if (!confirm('Remover este cadastro da lista?')) return;
+      try {
+        const res = await fetch(`/api/leads?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        leadsList = leadsList.filter(l => l.id !== id);
+        renderLeads();
+        showToast('Cadastro removido.');
+      } catch {
+        showToast('Não foi possível remover.');
+      }
+    }
+
+    function searchLeadInOccurrences(query) {
+      switchTab('ocorrencias');
+      document.getElementById('filterPrio').value = 'all';
+      document.getElementById('filterStatus').value = 'all';
+      document.getElementById('searchInput').value = query;
+      renderList();
+      renderDetail();
+    }
+
     loadSettings();
     loadData();
+    loadLeads();
   </script>
 </body>
 </html>
