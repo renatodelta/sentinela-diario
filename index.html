@@ -454,6 +454,20 @@
   </footer>
 
   <script>
+    function formatPhoneMaskIfNumeric(value) {
+      if (/[a-zA-Z@]/.test(value)) return value;
+      const digits = value.replace(/\D/g, '').slice(0, 11);
+      if (!digits) return '';
+      if (digits.length <= 2) return `(${digits}`;
+      if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+      if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+      return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+    }
+
+    document.getElementById('contato').addEventListener('input', function (e) {
+      e.target.value = formatPhoneMaskIfNumeric(e.target.value);
+    });
+
     document.getElementById('trialForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       const empresa = document.getElementById('empresa').value.trim();
