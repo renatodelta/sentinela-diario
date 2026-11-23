@@ -331,13 +331,15 @@
           throw new Error('Fallback JSON');
         }
       } catch {
-        const res = await fetch('data/ocorrencias.json');
+        const res = await fetch('data/ocorrencias.json?t=' + Date.now());
         store = await res.json();
+        const serverTs = new Date(store.atualizado_em || store.gerado_em || 0).getTime();
         const localSaved = localStorage.getItem('sentinela_diario_store');
         if (localSaved) {
           try {
             const parsed = JSON.parse(localSaved);
-            if (parsed && Array.isArray(parsed.ocorrencias) && parsed.ocorrencias.length) {
+            const localTs = new Date(parsed.atualizado_em || parsed.gerado_em || 0).getTime();
+            if (parsed && Array.isArray(parsed.ocorrencias) && parsed.ocorrencias.length && localTs > serverTs) {
               store = parsed;
             }
           } catch {}
@@ -429,6 +431,9 @@
       el.innerHTML = list.map(o => {
         const emailCount = (o.emails || []).length;
         const nome = o.razao_social_oficial || o.empresa;
+        const sentHint = (o.enviado_para && o.enviado_para.length)
+          ? ` • ✓ ${o.enviado_para[0]}`
+          : '';
         return `
           <div class="occ-card ${o.id === selectedId ? 'active' : ''}" onclick="selectItem('${o.id}')">
             <div class="occ-top">
@@ -438,7 +443,7 @@
             <div class="occ-title">${escapeHtml(nome)}</div>
             <div class="occ-sub">
               <span>Ed. ${escapeHtml(o.edicao || '-')} • Pág. ${o.pagina}</span>
-              <span>${emailCount ? `✉️ ${emailCount} e-mail(s)` : 'Sem e-mail'}</span>
+              <span>${emailCount ? `✉️ ${emailCount} e-mail(s)${escapeHtml(sentHint)}` : 'Sem e-mail'}</span>
             </div>
           </div>
         `;
@@ -490,6 +495,11 @@
             <p style="font-size:0.84rem;color:var(--slate);margin-top:4px;">
               ${escapeHtml(item.gancho || item.motivo_descarte || '')}
             </p>
+            ${(item.enviado_em || (item.enviado_para && item.enviado_para.length)) ? `
+              <div style="margin-top:8px;padding:8px 12px;border-radius:8px;background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;font-size:0.82rem;font-weight:600;">
+                ✓ E-mail enviado${item.enviado_em ? ` em ${escapeHtml(item.enviado_em.replace('T', ' '))}` : ''}${(item.enviado_para && item.enviado_para.length) ? ` para: ${escapeHtml(item.enviado_para.join(', '))}` : ''}
+              </div>
+            ` : ''}
           </div>
           <div style="display:flex;gap:8px;align-items:center;">
             <select onchange="updateStatus(this.value)" style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);font-weight:600;">
@@ -540,7 +550,8 @@
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <button class="btn btn-light btn-sm" onclick="copyText('assuntoInput', 'Assunto copiado!')">Copiar Assunto</button>
               <button class="btn btn-light btn-sm" onclick="copyText('corpoInput', 'Texto copiado!')">Copiar Texto</button>
-              <button class="btn btn-primary btn-sm" onclick="sendMailto()">Abrir no E-mail (mailto) ↗</button>
+              <button class="btn btn-primary btn-sm" onclick="sendViaResend()">Enviar via Resend</button>
+              <button class="btn btn-light btn-sm" onclick="sendMailto()">Abrir no E-mail (mailto) ↗</button>
             </div>
           </h3>
           <label class="field-label" for="assuntoInput">Assunto</label>
@@ -676,9 +687,49 @@
       const subject = encodeURIComponent(document.getElementById('assuntoInput').value);
       const body = encodeURIComponent(document.getElementById('corpoInput').value);
       it.status = 'enviado';
+      it.enviado_em = new Date().toISOString().slice(0, 19);
+      it.enviado_para = [...(it.emails_selecionados || [])];
       renderAll();
       saveStore();
       window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    }
+
+    async function sendViaResend() {
+      const it = currentItem();
+      if (!it) return;
+      const to = it.emails_selecionados || [];
+      if (!to.length) {
+        showToast('Selecione ou adicione pelo menos 1 e-mail destinatário.');
+        return;
+      }
+      const subject = document.getElementById('assuntoInput').value.trim();
+      const text = document.getElementById('corpoInput').value.trim();
+      if (!subject || !text) {
+        showToast('Assunto e mensagem não podem estar vazios.');
+        return;
+      }
+      const htmlBody = `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.55; color: #0f172a;">${escapeHtml(text).replace(/\n/g, '<br>')}</div>`;
+      showToast('Enviando via Resend...');
+      try {
+        const res = await fetch('api/index.php?action=send_email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ to, subject, text, html: htmlBody })
+        });
+        const data = await res.json();
+        if (!res.ok || data.error) {
+          throw new Error(data.error || 'Erro ao enviar');
+        }
+        it.status = 'enviado';
+        it.enviado_em = new Date().toISOString().slice(0, 19);
+        it.enviado_para = [...to];
+        if (data.id) it.resend_id = data.id;
+        renderAll();
+        saveStore();
+        showToast(`E-mail enviado via Resend para ${to.join(', ')}!`);
+      } catch (err) {
+        showToast(`Falha no envio via Resend: ${err.message}`);
+      }
     }
 
     function renderAll() {

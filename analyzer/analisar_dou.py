@@ -26,7 +26,7 @@ OCORRENCIAS_JSON = DATA_DIR / "ocorrencias.json"
 OCORRENCIAS_CSV = DATA_DIR / "ocorrencias.csv"
 CONHECIDAS_JSON = DATA_DIR / "empresas_conhecidas.json"
 
-LANDING_URL = "https://sentinela-diario.pages.dev/"
+LANDING_URL = "https://sentineladiario.com/"
 
 MESES = {
     "janeiro": "01",
@@ -515,26 +515,42 @@ def make_id(item: dict[str, Any]) -> str:
     return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:12]
 
 
-def analyze_all(enrich_api: bool = False) -> list[dict[str, Any]]:
+def analyze_all(enrich_api: bool = False, force: bool = False) -> list[dict[str, Any]]:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     conhecidas = load_conhecidas()
     by_cnpj = conhecidas.get("by_cnpj", {})
     aliases = conhecidas.get("name_aliases", {})
 
-    # Carrega ocorrências anteriores para preservar status, e-mails manuais e edições do usuário
+    # Carrega ocorrências anteriores para preservar status, e-mails manuais, histórico de envio e edições
     existing_map: dict[str, dict[str, Any]] = {}
+    existing_by_file: dict[str, list[dict[str, Any]]] = {}
+    analyzed_files_set: set[str] = set()
     if OCORRENCIAS_JSON.exists():
         try:
             old_data = json.loads(OCORRENCIAS_JSON.read_text(encoding="utf-8"))
+            analyzed_files_set = set(old_data.get("arquivos_analisados", []))
             for old in old_data.get("ocorrencias", []):
                 existing_map[old["id"]] = old
+                fname = old.get("arquivo_pdf", "")
+                if fname:
+                    existing_by_file.setdefault(fname, []).append(old)
         except Exception:
             pass
 
     pdf_files = sorted(DOU_DIR.glob("*.pdf"))
+    pdf_names = {p.name for p in pdf_files}
     all_items: list[dict[str, Any]] = []
 
+    # Preserva ocorrências de PDFs já analisados anteriormente que não estão mais na pasta local (ex.: runner na nuvem)
+    for old_fname in sorted(analyzed_files_set - pdf_names):
+        all_items.extend(existing_by_file.get(old_fname, []))
+
     for pdf_path in pdf_files:
+        if not force and pdf_path.name in analyzed_files_set:
+            print(f"[analisar_dou] Pulando PDF ja analisado: {pdf_path.name}")
+            all_items.extend(existing_by_file.get(pdf_path.name, []))
+            continue
+
         meta, columns = extract_columns_from_pdf(pdf_path)
         items = parse_structured_blocks(columns, meta)
         for item in items:
@@ -593,7 +609,7 @@ def analyze_all(enrich_api: bool = False) -> list[dict[str, Any]]:
             # Preserva edições do usuário se já existia
             if item_id in existing_map:
                 old = existing_map[item_id]
-                for keep_key in ["status", "notas", "assunto_email", "texto_email", "emails_selecionados"]:
+                for keep_key in ["status", "notas", "assunto_email", "texto_email", "emails_selecionados", "enviado_em", "enviado_para", "resend_id"]:
                     if old.get(keep_key) is not None and old.get(keep_key) != "":
                         item[keep_key] = old[keep_key]
                 # Mescla e-mails adicionados manualmente
@@ -609,10 +625,11 @@ def analyze_all(enrich_api: bool = False) -> list[dict[str, Any]]:
     order_map = {"alta": 0, "media": 1, "baixa": 2, "descartar": 3}
     all_items.sort(key=lambda x: (order_map.get(x["prioridade"], 9), x["arquivo_pdf"], x["pagina"]))
 
+    all_analyzed_files = sorted(analyzed_files_set | pdf_names)
     payload = {
         "gerado_em": datetime.now().isoformat(timespec="seconds"),
         "total": len(all_items),
-        "arquivos_analisados": [p.name for p in pdf_files],
+        "arquivos_analisados": all_analyzed_files,
         "ocorrencias": all_items,
     }
     OCORRENCIAS_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -648,8 +665,9 @@ def analyze_all(enrich_api: bool = False) -> list[dict[str, Any]]:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Analisa os Diários Oficiais de SJC na pasta dou-sj/")
     parser.add_argument("--enrich", action="store_true", help="Consulta BrasilAPI para enriquecer CNPJs com CNAE e sócios")
+    parser.add_argument("--force", action="store_true", help="Reanalisa todos os PDFs mesmo que já estejam em ocorrencias.json")
     args = parser.parse_args()
-    items = analyze_all(enrich_api=args.enrich)
+    items = analyze_all(enrich_api=args.enrich, force=args.force)
     print(f"Analise concluida: {len(items)} ocorrencias extraidas em {OCORRENCIAS_JSON}")
     for it in items:
         emails_str = ", ".join(e["email"] for e in it["emails"]) or "sem email"

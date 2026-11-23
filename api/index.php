@@ -182,11 +182,16 @@ HTML;
 
     $signatureText = "\n\n--\nRenato\nMonitoramento Inteligente de CNPJ & Diários Oficiais\nWhatsApp: (12) 99153-0244 | https://sentineladiario.com/";
 
+    $toList = is_array($body['to']) ? $body['to'] : [$body['to']];
+    $copyEmail = 'renatodelta@gmail.com';
     $payload = [
         'from' => !empty($body['from']) ? $body['from'] : $defaultFrom,
-        'to' => is_array($body['to']) ? $body['to'] : [$body['to']],
+        'to' => $toList,
         'subject' => $body['subject'],
     ];
+    if (!in_array(strtolower($copyEmail), array_map('strtolower', $toList), true)) {
+        $payload['bcc'] = [$copyEmail];
+    }
     if (!empty($body['html'])) {
         $payload['html'] = $body['html'] . $signatureHtml;
     }
