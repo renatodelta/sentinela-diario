@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-21T19:30:01",
+  "gerado_em": "2026-11-23T02:17:24",
   "total": 18,
   "arquivos_analisados": [
     "dm_2026-11-18_completo.pdf",
@@ -43,11 +43,16 @@
       "id": "58b7f7eb7a9c",
       "assunto_email": "Publicação no Diário Oficial de SJC (RESCISÃO DO CONTRATO Nº 439/2026) — HEALTH LIFE SOLUCOES MEDICAS E ORTOPEDICAS LTDA",
       "texto_email": "Olá, equipe da HEALTH LIFE SOLUCOES MEDICAS E ORTOPEDICAS LTDA,\n\nVi que a HEALTH LIFE SOLUCOES MEDICAS E ORTOPEDICAS LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.831, de 18/11/2026, página 3):\n\n• Ato: RESCISÃO DO CONTRATO Nº 439/2026\n• Objeto: TERMO DE RESCISÃO UNILATERAL AO CONTRATO N° 439/2026, CUJO OBJETO É A AQUISIÇÃO DE CADEIRA DE RODAS.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da HEALTH LIFE SOLUCOES MEDICAS E ORTOPEDICAS LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "health.lifesolucions@gmail.com"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:24",
+      "enviado_para": [
+        "health.lifesolucions@gmail.com"
+      ],
+      "resend_id": "01a20631-9e1e-7448-b419-afed37cc1e85"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -93,12 +98,18 @@
       "id": "57e55a0f651a",
       "assunto_email": "Publicação no Diário Oficial de SJC (1° TERMO DE ADITAMENTO DO ARP Nº 179/2025) — SOMA/SP PRODUTOS HOSPITALARES LTDA",
       "texto_email": "Olá, equipe da SOMA/SP PRODUTOS HOSPITALARES LTDA,\n\nVi que a SOMA/SP PRODUTOS HOSPITALARES LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.831, de 18/11/2026, página 3):\n\n• Ato: 1° TERMO DE ADITAMENTO DO ARP Nº 179/2025 (valor citado: MAIS R$ 1.053.600,00)\n• Objeto: PRORROGAÇÃO DO PRAZO DE VIGÊNCIA À ATA DE REGISTRO DE PRECOS N° 179/2025, PARA FORNECIMENTO DE MATERIAIS PARA PROTECAO INDIVIDUAL.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da SOMA/SP PRODUTOS HOSPITALARES LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "licitacao.sp@somahospitalar.com.br",
         "contabilidade.sp@somahospitalar.com.br"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:25",
+      "enviado_para": [
+        "licitacao.sp@somahospitalar.com.br",
+        "contabilidade.sp@somahospitalar.com.br"
+      ],
+      "resend_id": "01a20631-a0b3-7e80-bc37-168a9d0315d6"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -210,12 +221,18 @@
       "id": "7383e086bd79",
       "assunto_email": "Publicação no Diário Oficial de SJC (CONTRATO Nº 538/2026) — FREDERICO CARVALHO MAZOLINI & CIA LTDA",
       "texto_email": "Olá, equipe da FREDERICO CARVALHO MAZOLINI & CIA LTDA,\n\nVi que a FREDERICO CARVALHO MAZOLINI & CIA LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.832, de 19/11/2026, página 2):\n\n• Ato: CONTRATO Nº 538/2026 (valor citado: R$ 305.000,00)\n• Objeto: CONTRATACAO DE EMPRESA ESPECIALIZADA EM ENGENHARIA CIVIL PARA INSTALACAO DE SISTEMA DE PREVENCAO E COMBATE A INCENDIO NA EMEF FELICIO SAVASTANO PRAZO: 150 (CENTO E CINQUENTA) DIAS.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da FREDERICO CARVALHO MAZOLINI & CIA LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "contato@hpeng.com.br",
         "fredmazolini@hotmail.com"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:26",
+      "enviado_para": [
+        "contato@hpeng.com.br",
+        "fredmazolini@hotmail.com"
+      ],
+      "resend_id": "01a20631-a346-7c3d-9719-f3fcb0d8bc97"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -254,11 +271,16 @@
       "id": "eb425cd42179",
       "assunto_email": "Publicação no Diário Oficial de SJC (1° TERMO DE ADITAMENTO DO CONTRATO Nº 438/2025) — CONSTRUTORA TOCANTINS INDUSTRIA E COMERCIO LTDA",
       "texto_email": "Olá, equipe da CONSTRUTORA TOCANTINS INDUSTRIA E COMERCIO LTDA,\n\nVi que a CONSTRUTORA TOCANTINS INDUSTRIA E COMERCIO LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.831, de 18/11/2026, página 3):\n\n• Ato: 1° TERMO DE ADITAMENTO DO CONTRATO Nº 438/2025\n• Objeto: PRORROGAÇÃO DO PRAZO DE VIGÊNCIA EM ALTERAÇÃO DE VALOR AO CONTRATO N° 438/2025, PARA DESENVOLVIMENTO DO PROJETO BASICO E EXECUTIVO DE ARQUITETURA, BEM COMO DOS PROJETOS E DOCUMENTO.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da CONSTRUTORA TOCANTINS INDUSTRIA E COMERCIO LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "tocantinsam@gmail.com"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:26",
+      "enviado_para": [
+        "tocantinsam@gmail.com"
+      ],
+      "resend_id": "01a20631-a5e1-7ecd-82bc-fa9d8f876a83"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -297,11 +319,16 @@
       "id": "1f453a4c1b27",
       "assunto_email": "Publicação no Diário Oficial de SJC (1° TERMO DE ADITAMENTO DO CONTRATO Nº 370/2024) — POS-DADOS COMERCIO E SERVICOS DE ASSISTENCIA TECNICA LTDA",
       "texto_email": "Olá, equipe da POS-DADOS COMERCIO E SERVICOS DE ASSISTENCIA TECNICA LTDA,\n\nVi que a POS-DADOS COMERCIO E SERVICOS DE ASSISTENCIA TECNICA LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.831, de 18/11/2026, página 3):\n\n• Ato: 1° TERMO DE ADITAMENTO DO CONTRATO Nº 370/2024 (valor citado: MAIS R$ 138.355,20)\n• Objeto: PRORROGAÇÃO DE PRAZO E APLICAÇÃO DE REAJUSTE DE PREÇOS REFERENTE À LOCAÇÃO DE NOBREAK.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da POS-DADOS COMERCIO E SERVICOS DE ASSISTENCIA TECNICA LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "vendas@posdados.com.br"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:27",
+      "enviado_para": [
+        "vendas@posdados.com.br"
+      ],
+      "resend_id": "01a20631-a87d-726a-af96-a874278e9b19"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -339,11 +366,16 @@
       "id": "c1b8263a5715",
       "assunto_email": "Publicação no Diário Oficial de SJC (1° TERMO DE ADITAMENTO DO ARP Nº 179/2025) — DISTRIBUIDORA BRAZLIMP LTDA",
       "texto_email": "Olá, equipe da DISTRIBUIDORA BRAZLIMP LTDA,\n\nVi que a DISTRIBUIDORA BRAZLIMP LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.831, de 18/11/2026, página 3):\n\n• Ato: 1° TERMO DE ADITAMENTO DO ARP Nº 179/2025 (valor citado: MAIS R$ 48.000,00)\n• Objeto: PRORROGAÇÃO DO PRAZO DE VIGÊNCIA À ATA DE REGISTRO DE PRECOS N° 179/2025, PARA FORNECIMENTO DE MATERIAIS PARA PROTECAO INDIVIDUAL.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da DISTRIBUIDORA BRAZLIMP LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "vendas@brazlimp.com"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:28",
+      "enviado_para": [
+        "vendas@brazlimp.com"
+      ],
+      "resend_id": "01a20631-ab15-79fb-bcb8-9e31d465056b"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -381,11 +413,16 @@
       "id": "fc1360a1c68b",
       "assunto_email": "Publicação no Diário Oficial de SJC (1° TERMO DE ADITAMENTO DO ARP Nº 179/2025) — OKEY-MED DISTRIBUIDORA DE MEDICAMENTOS HOSPITALARES ODONTOLOGICOS IMPORTACOES E EXPORTACOES LTDA",
       "texto_email": "Olá, equipe da OKEY-MED DISTRIBUIDORA DE MEDICAMENTOS HOSPITALARES ODONTOLOGICOS IMPORTACOES E EXPORTACOES LTDA,\n\nVi que a OKEY-MED DISTRIBUIDORA DE MEDICAMENTOS HOSPITALARES ODONTOLOGICOS IMPORTACOES E EXPORTACOES LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.831, de 18/11/2026, página 3):\n\n• Ato: 1° TERMO DE ADITAMENTO DO ARP Nº 179/2025 (valor citado: MAIS R$ 8.160,00)\n• Objeto: PRORROGAÇÃO DO PRAZO DE VIGÊNCIA À ATA DE REGISTRO DE PRECOS N° 179/2025, PARA FORNECIMENTO DE MATERIAIS PARA PROTECAO INDIVIDUAL.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da OKEY-MED DISTRIBUIDORA DE MEDICAMENTOS HOSPITALARES ODONTOLOGICOS IMPORTACOES E EXPORTACOES LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "okeymed@okeymed.com.br"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:28",
+      "enviado_para": [
+        "okeymed@okeymed.com.br"
+      ],
+      "resend_id": "01a20631-adb3-7e3c-88ce-4cf2b315b042"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -425,11 +462,16 @@
       "id": "65a0a71ce766",
       "assunto_email": "Publicação no Diário Oficial de SJC (1º TERMO DE ADITAMENTO DO CONTRATO Nº 20/2024) — FOUR INFO DESENVOLVIMENTO DE SOFTWARE LTDA",
       "texto_email": "Olá, equipe da FOUR INFO DESENVOLVIMENTO DE SOFTWARE LTDA,\n\nVi que a FOUR INFO DESENVOLVIMENTO DE SOFTWARE LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.831, de 18/11/2026, página 6):\n\n• Ato: 1º TERMO DE ADITAMENTO DO CONTRATO Nº 20/2024 (valor citado: R$ 156.146,58 (CENTO E CINQUENTA E SEIS MIL, CENTO E QUARENTA E SEIS REAIS E CINQUENTA E OITO CENTAVOS).)\n• Objeto: CONTRATAÇÃO DE EMPRESA ESPECIALIZADA NO FORNECIMENTO DE LICENÇA DE USO DE SISTEMA DE GESTÃO PREVIDENCIÁRIA COM FOCO EM REGIME PRÓPRIO DE PREVIDÊNCIA SOCIAL - RPPS PARA ATENDER A DE.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da FOUR INFO DESENVOLVIMENTO DE SOFTWARE LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "suporte@fourinfo.com.br"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:29",
+      "enviado_para": [
+        "suporte@fourinfo.com.br"
+      ],
+      "resend_id": "01a20631-b046-7b5f-b738-41ffd0ba9013"
     },
     {
       "arquivo_pdf": "dm_2026-11-19_completo.pdf",
@@ -467,11 +509,16 @@
       "id": "7011df70ef94",
       "assunto_email": "Publicação no Diário Oficial de SJC (ARP Nº 84/2026) — MAX PHARMA COMERCIO LTDA",
       "texto_email": "Olá, equipe da MAX PHARMA COMERCIO LTDA,\n\nVi que a MAX PHARMA COMERCIO LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.832, de 19/11/2026, página 2):\n\n• Ato: ARP Nº 84/2026 (valor citado: R$ 723,60)\n• Objeto: ATA DE REGISTRO DE PREÇOS PARA O FORNECIMENTO DE MEDICAMENTOS DIVERSOS - AÇÃO JUDICIAL - GRUPO IV. PRAZO: 12 (DOZE) MESES.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da MAX PHARMA COMERCIO LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "maxpharma.empdistribuidora@gmail.com"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:30",
+      "enviado_para": [
+        "maxpharma.empdistribuidora@gmail.com"
+      ],
+      "resend_id": "01a20631-b2dd-75a8-9890-c1c4fd8c8492"
     },
     {
       "arquivo_pdf": "dm_2026-11-19_completo.pdf",
@@ -515,12 +562,18 @@
       "id": "69f9b372557b",
       "assunto_email": "Publicação no Diário Oficial de SJC (1°TERMO DE ADITAMENTO DO CONTRATO Nº 560/2025) — S G M K LOCACOES LTDA",
       "texto_email": "Olá, equipe da S G M K LOCACOES LTDA,\n\nVi que a S G M K LOCACOES LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.832, de 19/11/2026, página 2):\n\n• Ato: 1°TERMO DE ADITAMENTO DO CONTRATO Nº 560/2025 (valor citado: MAIS R$ 53.469,12)\n• Objeto: PRORROGAÇÃO DE PRAZO DE VIGÊNCIA COM REAJUSTE À LOCAÇÃO DE VEÍCULO LEVE CAPACIDADE MÍNIMA DE 05 LUGARES - SEM MOTORISTA - GRUPO I.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da S G M K LOCACOES LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "central@sgmk.com.br",
         "adm@atcontabil.com.br"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:30",
+      "enviado_para": [
+        "central@sgmk.com.br",
+        "adm@atcontabil.com.br"
+      ],
+      "resend_id": "01a20631-b574-77fa-9029-29a7647e2f08"
     },
     {
       "arquivo_pdf": "dm_2026-11-19_completo.pdf",
@@ -563,12 +616,18 @@
       "id": "0edaffae84ca",
       "assunto_email": "Publicação no Diário Oficial de SJC (1° TERMO DE ADITAMENTO DO CONTRATO Nº 35/2026) — NIPCABLE DO BRASIL TELECOM LTDA",
       "texto_email": "Olá, equipe da NIPCABLE DO BRASIL TELECOM LTDA,\n\nVi que a NIPCABLE DO BRASIL TELECOM LTDA teve uma publicação recente no Diário Oficial do Município de São José dos Campos (Edição nº 3.832, de 19/11/2026, página 2):\n\n• Ato: 1° TERMO DE ADITAMENTO DO CONTRATO Nº 35/2026\n• Objeto: ALTERAÇÃO DE CRONOGRAMA NA PRESTACAO DE SERVICOS QUE COMPONHAM UMA SOLUCAO DE CIDADE INTELIGENTE (SCAAS - SMART CITY AS A SERVICE), CONTEMPLANDO SERVICOS DE CONECTIVIDADE, TELECOMU.\n\nEstou lançando o Sentinela Diário, um sistema que monitora automaticamente o CNPJ da empresa nos Diários Oficiais e avisa no WhatsApp e e-mail com um resumo objetivo sempre que sai algo novo (contratos, aditivos, reajustes, prazos de vigência ou notificações).\n\nGostaria de testar gratuitamente por 15 dias para acompanhar os contratos e publicações da NIPCABLE DO BRASIL TELECOM LTDA?\nVeja como funciona em: https://sentineladiario.com/\n\nUm abraço!",
-      "status": "pendente",
+      "status": "enviado",
       "notas": "",
       "emails_selecionados": [
         "financeiro@nipbr.com.br",
         "nfe@nipbr.com.br"
-      ]
+      ],
+      "enviado_em": "2026-11-23T02:17:31",
+      "enviado_para": [
+        "financeiro@nipbr.com.br",
+        "nfe@nipbr.com.br"
+      ],
+      "resend_id": "01a20631-b809-779a-905d-b068976c9e59"
     },
     {
       "arquivo_pdf": "dm_2026-11-18_completo.pdf",
@@ -737,5 +796,6 @@
       "notas": "",
       "emails_selecionados": []
     }
-  ]
+  ],
+  "atualizado_em": "2026-11-23T02:17:32"
 }
