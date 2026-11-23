@@ -1,0 +1,50 @@
+name: Sentinela Diario - Coleta, Analise e Envio Automatico
+
+on:
+  schedule:
+    # 09:00 e 18:00 (horario de Brasilia, UTC-3) de segunda a sexta
+    - cron: '0 12 * * 1-5'
+    - cron: '0 21 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-sentinela:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch new DOU SJC PDFs
+        run: python analyzer/fetch_dou.py
+
+      - name: Analyze new PDFs (incremental + enrich)
+        run: python analyzer/analisar_dou.py --enrich
+
+      - name: Send automatic emails via Resend
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python analyzer/send_auto_emails.py
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "Sentinela Bot"
+          git config user.email "bot@sentineladiario.com"
+          git add data/ocorrencias.json data/ocorrencias.csv
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteracao para commitar."
+          else
+            git commit -m "chore: atualiza boletins DOU SJC e envios automaticos"
+            git push
+          fi
