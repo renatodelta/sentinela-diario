@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Coletor automático de PDFs do Diário do Município de São José dos Campos.
-Acessa https://diariodomunicipio.sjc.sp.gov.br/, encontra links de PDFs de edições
-e baixa apenas os arquivos que ainda não existem em dou-sj/ nem em data/ocorrencias.json.
+Acessa https://diariodomunicipio.sjc.sp.gov.br/, lê DADOS_ULTIMA_DATA
+(e links .pdf como fallback) e baixa apenas edições que ainda não existem
+em dou-sj/ nem em data/ocorrencias.json.
 """
 
 import json
@@ -22,46 +23,68 @@ HEADERS = {
 }
 
 
-def get_already_processed() -> set[str]:
-    processed: set[str] = set()
+def get_already_processed() -> tuple[set[str], set[str]]:
+    processed_files: set[str] = set()
+    processed_editions: set[str] = set()
     if DOU_DIR.exists():
         for p in DOU_DIR.glob("*.pdf"):
-            processed.add(p.name)
+            processed_files.add(p.name)
     if OCORRENCIAS_JSON.exists():
         try:
             data = json.loads(OCORRENCIAS_JSON.read_text(encoding="utf-8"))
             for name in data.get("arquivos_analisados", []):
-                processed.add(name)
+                processed_files.add(name)
+            for occ in data.get("ocorrencias", []):
+                ed = re.sub(r"\D", "", str(occ.get("edicao") or ""))
+                if ed:
+                    processed_editions.add(ed)
         except Exception:
             pass
-    return processed
+    return processed_files, processed_editions
 
 
-def extract_pdf_links(html: str, base_url: str) -> list[str]:
-    # Captura hrefs e URLs diretas para arquivos .pdf
+def extract_editions_from_portal(html: str) -> list[dict[str, str]]:
+    """Extrai edições de let DADOS_ULTIMA_DATA = {...}; no HTML do portal de SJC."""
+    m = re.search(r"let\s+DADOS_ULTIMA_DATA\s*=\s*(\{.*?\});", html, re.DOTALL)
+    if not m:
+        return []
+    try:
+        payload = json.loads(m.group(1))
+        itens = payload.get("itens") or []
+        editions: list[dict[str, str]] = []
+        for it in itens:
+            ed_id = it.get("id")
+            ed_num = it.get("numero")
+            if ed_id and ed_num:
+                editions.append({
+                    "id": str(ed_id),
+                    "numero": str(ed_num),
+                    "data": str(it.get("data") or ""),
+                    "url": f"https://diariodomunicipio.sjc.sp.gov.br/portal/edicoes/download/{ed_id}",
+                    "filename": f"diario_sjc_{ed_num}_{ed_id}.pdf",
+                })
+        return editions
+    except Exception as exc:
+        print(f"[fetch_dou] Falha ao interpretar DADOS_ULTIMA_DATA: {exc}")
+        return []
+
+
+def extract_pdf_links_fallback(html: str, base_url: str) -> list[dict[str, str]]:
     raw_matches = re.findall(r"""(?:href|src)=["']([^"']+\.pdf(?:\?[^"']*)?)["']""", html, re.IGNORECASE)
-    if not raw_matches:
-        raw_matches = re.findall(r"""(https?://[^\s"'<>]+\.pdf(?:\?[^\s"'<>]*)?)""", html, re.IGNORECASE)
-
     seen: set[str] = set()
-    urls: list[str] = []
+    out: list[dict[str, str]] = []
     for m in raw_matches:
         full = urljoin(base_url, m.strip())
         if full not in seen:
             seen.add(full)
-            urls.append(full)
-    return urls
-
-
-def safe_filename(url: str) -> str:
-    path = urlparse(url).path
-    name = Path(path).name or "edicao.pdf"
-    return re.sub(r"[^a-zA-Z0-9_\-\.]", "_", name)
+            fname = re.sub(r"[^a-zA-Z0-9_\-\.]", "_", Path(urlparse(full).path).name or "edicao.pdf")
+            out.append({"id": "", "numero": "", "data": "", "url": full, "filename": fname})
+    return out
 
 
 def fetch_new_pdfs(max_downloads: int = 5) -> list[str]:
     DOU_DIR.mkdir(parents=True, exist_ok=True)
-    already = get_already_processed()
+    processed_files, processed_editions = get_already_processed()
 
     try:
         resp = requests.get(PORTAL_URL, headers=HEADERS, timeout=25)
@@ -70,16 +93,23 @@ def fetch_new_pdfs(max_downloads: int = 5) -> list[str]:
         print(f"[fetch_dou] Erro ao acessar {PORTAL_URL}: {exc}")
         return []
 
-    pdf_urls = extract_pdf_links(resp.text, PORTAL_URL)
-    print(f"[fetch_dou] Links .pdf encontrados no portal: {len(pdf_urls)}")
+    candidates = extract_editions_from_portal(resp.text)
+    if candidates:
+        print(f"[fetch_dou] Edicoes encontradas em DADOS_ULTIMA_DATA: {len(candidates)}")
+    else:
+        candidates = extract_pdf_links_fallback(resp.text, PORTAL_URL)
+        print(f"[fetch_dou] Links .pdf encontrados no fallback: {len(candidates)}")
 
     downloaded: list[str] = []
-    for url in pdf_urls:
+    for item in candidates:
         if len(downloaded) >= max_downloads:
             break
-        fname = safe_filename(url)
-        if fname in already:
-            print(f"[fetch_dou] Pulando (ja lido/baixado): {fname}")
+        fname = item["filename"]
+        ed_num_digits = re.sub(r"\D", "", item.get("numero") or "")
+        url = item["url"]
+
+        if fname in processed_files or (ed_num_digits and ed_num_digits in processed_editions):
+            print(f"[fetch_dou] Pulando (ja lido/baixado): {fname} (edicao {item.get('numero') or '-'})")
             continue
 
         dest = DOU_DIR / fname
@@ -88,14 +118,16 @@ def fetch_new_pdfs(max_downloads: int = 5) -> list[str]:
             r = requests.get(url, headers=HEADERS, timeout=60, stream=True)
             r.raise_for_status()
             ctype = (r.headers.get("Content-Type") or "").lower()
-            if "pdf" not in ctype and not fname.lower().endswith(".pdf"):
-                print(f"[fetch_dou] Ignorado (nao e PDF): {fname} ({ctype})")
+            if "html" in ctype:
+                print(f"[fetch_dou] Ignorado (retornou HTML, nao PDF): {fname}")
                 continue
             with dest.open("wb") as f:
                 for chunk in r.iter_content(chunk_size=65536):
                     if chunk:
                         f.write(chunk)
-            already.add(fname)
+            processed_files.add(fname)
+            if ed_num_digits:
+                processed_editions.add(ed_num_digits)
             downloaded.append(fname)
             print(f"[fetch_dou] Salvo em {dest}")
         except Exception as exc:
