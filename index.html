@@ -7,6 +7,13 @@
   <meta name="description" content="Receba alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial: contratos, aditivos, reajustes, prazos e notificações." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://sentineladiario.com/" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#0b132b" />
   <!-- Google Search Console: substitua SEU_CODIGO_GSC pelo token gerado no Search Console -->
   <!-- <meta name="google-site-verification" content="SEU_CODIGO_GSC" /> -->
 
@@ -26,9 +33,11 @@
   <meta property="og:title" content="Sentinela Diário — Monitoramento de Diários Oficiais por CNPJ" />
   <meta property="og:description" content="Receba alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial: contratos, aditivos, reajustes e prazos." />
   <meta property="og:url" content="https://sentineladiario.com/" />
+  <meta property="og:image" content="https://sentineladiario.com/img/og-sentinela.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Sentinela Diário — Monitoramento de Diários Oficiais por CNPJ" />
   <meta name="twitter:description" content="Alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial." />
+  <meta name="twitter:image" content="https://sentineladiario.com/img/og-sentinela.png" />
 
   <script type="application/ld+json">
   {
@@ -101,12 +110,8 @@
       width: 36px;
       height: 36px;
       border-radius: 10px;
-      background: linear-gradient(135deg, var(--navy), var(--emerald-dark));
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 1rem;
+      display: block;
+      flex-shrink: 0;
     }
     .nav-links {
       display: flex;
@@ -344,7 +349,7 @@
   <header>
     <div class="container nav">
       <a href="#" class="brand">
-        <span class="brand-icon">S</span>
+        <img src="/img/logo-mark.svg" alt="Sentinela Diário" class="brand-icon" width="36" height="36" />
         <span>Sentinela Diário</span>
       </a>
       <nav class="nav-links">
@@ -488,6 +493,7 @@
               <p style="font-size:0.76rem;color:var(--muted);margin-top:5px;">Ativação imediata para São José dos Campos (SP). Outras cidades/estados entram na fila prioritária.</p>
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%;">Solicitar teste grátis de 15 dias</button>
+            <p class="form-note" style="margin-top:8px;">Ao enviar, você concorda com os <a href="/termos.html" style="text-decoration:underline;color:var(--slate);">Termos de Uso</a> e a <a href="/privacidade.html" style="text-decoration:underline;color:var(--slate);">Política de Privacidade</a>.</p>
             <p class="form-note" id="formFeedback">Resposta rápida em horário comercial.</p>
           </form>
         </div>
