@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog Sentinela Diário — Guias sobre Diário Oficial, CNPJ e Contratos Públicos</title>
+  <meta name="description" content="Artigos práticos sobre como monitorar CNPJ no Diário Oficial, acompanhar aditivos, reajustes, prazos de licitações e evitar sanções." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sentineladiario.com/blog/" />
+
+  <!-- Google Analytics 4 (GA4): substitua G-XXXXXXXXXX pelo seu ID de medição -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Sentinela Diário" />
+  <meta property="og:title" content="Blog Sentinela Diário — Monitoramento de Diários Oficiais e Contratos" />
+  <meta property="og:description" content="Guias práticos para empresas que fornecem para o setor público acompanharem publicações no Diário Oficial sem perder prazos." />
+  <meta property="og:url" content="https://sentineladiario.com/blog/" />
+  <meta property="og:image" content="https://sentineladiario.com/blog/img/monitorar-cnpj-diario.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Blog Sentinela Diário",
+    "url": "https://sentineladiario.com/blog/",
+    "description": "Conteúdos sobre monitoramento de CNPJ em Diários Oficiais, contratos públicos, aditivos, reajustes e prazos.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sentinela Diário",
+      "url": "https://sentineladiario.com/"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root { --navy: #0b132b; --slate: #475569; --muted: #64748b; --bg: #f8fafc; --card: #ffffff; --border: #e2e8f0; --emerald: #10b981; --emerald-dark: #059669; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--navy); background: var(--bg); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+    header { position: sticky; top: 0; z-index: 40; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+    .brand-icon { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--navy), var(--emerald-dark)); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 1rem; }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-size: 0.93rem; font-weight: 500; color: var(--slate); }
+    .nav-links a:hover { color: var(--navy); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 0.92rem; transition: all 0.18s ease; }
+    .btn-primary { background: var(--emerald); color: #fff; box-shadow: 0 8px 20px -6px rgba(16, 185, 129, 0.5); }
+    .btn-primary:hover { background: var(--emerald-dark); transform: translateY(-1px); }
+    .hero-blog { padding: 64px 0 40px; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-bottom: 1px solid var(--border); }
+    .pill { display: inline-block; padding: 5px 12px; border-radius: 999px; background: rgba(16, 185, 129, 0.12); color: var(--emerald-dark); font-size: 0.8rem; font-weight: 700; margin-bottom: 14px; }
+    .hero-blog h1 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .hero-blog p { color: var(--slate); max-width: 640px; font-size: 1.05rem; }
+    .posts-section { padding: 48px 0 72px; }
+    .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .post-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.18s ease, box-shadow 0.18s ease; }
+    .post-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px rgba(15, 23, 42, 0.12); }
+    .post-thumb { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 1px solid var(--border); }
+    .post-body { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+    .post-meta { font-size: 0.8rem; font-weight: 600; color: var(--emerald-dark); margin-bottom: 8px; }
+    .post-card h2 { font-size: 1.15rem; line-height: 1.35; margin-bottom: 10px; }
+    .post-card p { color: var(--slate); font-size: 0.93rem; margin-bottom: 18px; }
+    .read-more { font-weight: 700; font-size: 0.9rem; color: var(--emerald-dark); }
+    .cta-banner { margin-top: 48px; background: var(--navy); color: #fff; border-radius: 20px; padding: 36px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .cta-banner h3 { font-size: 1.35rem; margin-bottom: 6px; }
+    .cta-banner p { color: #cbd5e1; font-size: 0.95rem; max-width: 560px; }
+    footer { padding: 32px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.86rem; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .posts-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="/" class="brand"><span class="brand-icon">S</span><span>Sentinela Diário</span></a>
+      <nav class="nav-links">
+        <a href="/#como-funciona">Como funciona</a>
+        <a href="/#monitoramento">O que monitoramos</a>
+        <a href="/blog/" style="color:var(--navy); font-weight:700;">Blog</a>
+      </nav>
+      <a href="/#teste-gratis" class="btn btn-primary">Testar 15 dias grátis</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-blog">
+      <div class="container">
+        <span class="pill">Guias Práticos • Pós-Licitação e Diários Oficiais</span>
+        <h1>Blog Sentinela Diário</h1>
+        <p>Conteúdos objetivos para empresas, setores jurídicos e licitantes não perderem prazos, aditivos, reajustes e notificações publicadas no Diário Oficial.</p>
+      </div>
+    </section>
+
+    <section class="posts-section">
+      <div class="container">
+        <div class="posts-grid">
+          <article class="post-card">
+            <a href="/blog/como-monitorar-cnpj-diario-oficial.html">
+              <img class="post-thumb" src="/blog/img/monitorar-cnpj-diario.jpg" alt="Analista conferindo alertas do Diário Oficial por CNPJ" width="1280" height="720" loading="eager" />
+            </a>
+            <div class="post-body">
+              <div>
+                <div class="post-meta">Pós-licitação • 4 min de leitura</div>
+                <h2><a href="/blog/como-monitorar-cnpj-diario-oficial.html">Como saber se o CNPJ da sua empresa saiu no Diário Oficial (e automatizar alertas)</a></h2>
+                <p>Veja por que conferir PDFs manualmente gera riscos de prazos vencidos e como automatizar o monitoramento do seu CNPJ no WhatsApp.</p>
+              </div>
+              <a class="read-more" href="/blog/como-monitorar-cnpj-diario-oficial.html">Ler artigo completo →</a>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="/blog/aditivos-e-reajustes-contratos-publicos-diario-oficial.html">
+              <img class="post-thumb" src="/blog/img/aditivos-reajustes-contratos.jpg" alt="Documentos de contratos públicos e planilhas de reajuste" width="1280" height="720" loading="lazy" />
+            </a>
+            <div class="post-body">
+              <div>
+                <div class="post-meta">Contratos Públicos • 5 min de leitura</div>
+                <h2><a href="/blog/aditivos-e-reajustes-contratos-publicos-diario-oficial.html">Aditivos e Reajustes em Contratos Públicos: como não perder prazos no Diário Oficial</a></h2>
+                <p>Entenda a diferença entre termo aditivo e apostilamento e evite faturar com valor defasado por não acompanhar as publicações.</p>
+              </div>
+              <a class="read-more" href="/blog/aditivos-e-reajustes-contratos-publicos-diario-oficial.html">Ler artigo completo →</a>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="/blog/sancoes-rescisao-notificacao-diario-oficial-empresa.html">
+              <img class="post-thumb" src="/blog/img/notificacao-sancao-diario.jpg" alt="Advogada corporativa analisando alerta jurídico no celular" width="1280" height="720" loading="lazy" />
+            </a>
+            <div class="post-body">
+              <div>
+                <div class="post-meta">Jurídico e Compliance • 4 min de leitura</div>
+                <h2><a href="/blog/sancoes-rescisao-notificacao-diario-oficial-empresa.html">Sua empresa recebeu notificação ou sanção no Diário Oficial? Veja como agir rápido</a></h2>
+                <p>Saiba como detectar intimações, multas e processos administrativos no mesmo dia da publicação para não perder prazos de defesa.</p>
+              </div>
+              <a class="read-more" href="/blog/sancoes-rescisao-notificacao-diario-oficial-empresa.html">Ler artigo completo →</a>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <a href="/blog/checklist-pos-licitacao-acompanhamento-diario-oficial.html">
+              <img class="post-thumb" src="/blog/img/checklist-pos-licitacao.jpg" alt="Equipe revisando checklist pós-licitação em escritório" width="1280" height="720" loading="lazy" />
+            </a>
+            <div class="post-body">
+              <div>
+                <div class="post-meta">Gestão de Licitações • 5 min de leitura</div>
+                <h2><a href="/blog/checklist-pos-licitacao-acompanhamento-diario-oficial.html">Checklist Pós-Licitação: o que acompanhar todo mês após vencer um contrato público</a></h2>
+                <p>Organize vigências, certidões, reajustes e monitoramento automático de Diários Oficiais após assinar contratos com órgãos públicos.</p>
+              </div>
+              <a class="read-more" href="/blog/checklist-pos-licitacao-acompanhamento-diario-oficial.html">Ler artigo completo →</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="cta-banner">
+          <div>
+            <h3>Quer receber no WhatsApp sempre que o seu CNPJ aparecer no Diário Oficial?</h3>
+            <p>Valide na prática com 15 dias gratuitos de monitoramento diário sem compromisso.</p>
+          </div>
+          <a href="/?utm_source=blog&utm_medium=cta_index&utm_campaign=blog_home#teste-gratis" class="btn btn-primary">Teste grátis aqui</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 Sentinela Diário — Monitoramento de Diários Oficiais.</span>
+      <div style="display:flex; gap:18px;">
+        <a href="/">Página inicial</a>
+        <a href="/#teste-gratis">Teste grátis</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

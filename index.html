@@ -5,6 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sentinela Diário — Monitoramento Inteligente de Diários Oficiais por CNPJ</title>
   <meta name="description" content="Receba alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial: contratos, aditivos, reajustes, prazos e notificações." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sentineladiario.com/" />
+  <!-- Google Search Console: substitua SEU_CODIGO_GSC pelo token gerado no Search Console -->
+  <!-- <meta name="google-site-verification" content="SEU_CODIGO_GSC" /> -->
+
+  <!-- Google Analytics 4 (GA4): substitua G-XXXXXXXXXX pelo seu ID de medição -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Sentinela Diário" />
+  <meta property="og:title" content="Sentinela Diário — Monitoramento de Diários Oficiais por CNPJ" />
+  <meta property="og:description" content="Receba alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial: contratos, aditivos, reajustes e prazos." />
+  <meta property="og:url" content="https://sentineladiario.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sentinela Diário — Monitoramento de Diários Oficiais por CNPJ" />
+  <meta name="twitter:description" content="Alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Sentinela Diário",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://sentineladiario.com/",
+    "description": "Monitoramento automático de Diários Oficiais por CNPJ com alertas no WhatsApp e e-mail sobre contratos, aditivos, reajustes e notificações.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL",
+      "description": "Teste gratuito por 15 dias"
+    }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -308,6 +350,7 @@
       <nav class="nav-links">
         <a href="#como-funciona">Como funciona</a>
         <a href="#monitoramento">O que monitoramos</a>
+        <a href="/blog/">Blog</a>
         <a href="#teste-gratis">Teste 15 dias grátis</a>
       </nav>
       <a href="#teste-gratis" class="btn btn-primary">Ativar teste grátis</a>
@@ -450,6 +493,10 @@
   <footer>
     <div class="container footer-inner">
       <span>© 2026 Sentinela Diário — Monitoramento de Diários Oficiais.</span>
+      <div style="display:flex; gap:18px;">
+        <a href="/blog/">Blog</a>
+        <a href="#teste-gratis">Teste grátis</a>
+      </div>
     </div>
   </footer>
 
@@ -487,6 +534,12 @@
           body: JSON.stringify({ empresa, nome, contato })
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', {
+            event_category: 'lead',
+            event_label: 'teste_15_dias'
+          });
+        }
         feedback.innerHTML = `<span style="color:#059669;font-weight:600;">Cadastro confirmado!</span> Seu monitoramento gratuito de 15 dias foi ativado.`;
         this.reset();
       } catch {

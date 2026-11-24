@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /painel.html
+
+Sitemap: https://sentineladiario.com/sitemap.xml
