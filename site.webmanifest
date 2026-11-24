@@ -1,0 +1,27 @@
+{
+  "name": "Sentinela Diário",
+  "short_name": "Sentinela",
+  "description": "Monitoramento automático de Diários Oficiais por CNPJ com alertas no WhatsApp e e-mail.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0b132b",
+  "icons": [
+    {
+      "src": "/img/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    }
+  ]
+}

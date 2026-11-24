@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sentinela Diário — Painel de Tratamento e Prospecção (DOU SJC)</title>
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#0f172a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -43,9 +49,7 @@
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .brand-badge {
-      width: 34px; height: 34px; border-radius: 9px;
-      background: var(--emerald); color: #fff;
-      display: grid; place-items: center; font-weight: 800;
+      width: 36px; height: 36px; border-radius: 9px; display: block; flex-shrink: 0;
     }
     .brand h1 { font-size: 1.05rem; font-weight: 700; }
     .brand span { font-size: 0.78rem; color: #94a3b8; display: block; }
@@ -236,7 +240,7 @@
 <body>
   <header>
     <div class="brand">
-      <div class="brand-badge">S</div>
+      <img src="img/logo-mark.svg" alt="Sentinela Diário" class="brand-badge" width="36" height="36" />
       <div>
         <h1>Sentinela Diário — Painel de Tratamento (DOU SJC)</h1>
         <span id="metaSummary">Carregando dados da pasta dou-sj/...</span>
