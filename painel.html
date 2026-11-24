@@ -782,14 +782,23 @@
       const htmlBody = `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.55; color: #0f172a;">${escapeHtml(text).replace(/\n/g, '<br>')}</div>`;
       showToast('Enviando via Resend...');
       try {
-        const res = await fetch('api/index.php?action=send_email', {
+        let res = await fetch('/api/send-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ to, subject, text, html: htmlBody })
         });
-        const data = await res.json();
+        if (res.status === 404) {
+          res = await fetch('api/index.php?action=send_email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ to, subject, text, html: htmlBody })
+          });
+        }
+        const rawText = await res.text();
+        let data = {};
+        try { data = JSON.parse(rawText); } catch {}
         if (!res.ok || data.error) {
-          throw new Error(data.error || 'Erro ao enviar');
+          throw new Error(data.error || `Erro HTTP ${res.status}`);
         }
         it.status = 'enviado';
         it.enviado_em = new Date().toISOString().slice(0, 19);
