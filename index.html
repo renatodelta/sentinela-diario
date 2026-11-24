@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentinela Diário — Monitoramento Inteligente de Diários Oficiais por CNPJ</title>
-  <meta name="description" content="Receba alertas automáticos no WhatsApp e e-mail sempre que o CNPJ da sua empresa aparecer no Diário Oficial: contratos, aditivos, reajustes, prazos e notificações." />
+  <title>Sentinela Diário — Alertas de Diário Oficial por CNPJ</title>
+  <meta name="description" content="Alertas automáticos no WhatsApp e e-mail quando o CNPJ da sua empresa sai no Diário Oficial: contratos, aditivos, reajustes e prazos. Teste grátis." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://sentineladiario.com/" />
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -41,18 +41,37 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Sentinela Diário",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web",
-    "url": "https://sentineladiario.com/",
-    "description": "Monitoramento automático de Diários Oficiais por CNPJ com alertas no WhatsApp e e-mail sobre contratos, aditivos, reajustes e notificações.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "BRL",
-      "description": "Teste gratuito por 15 dias"
-    }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Sentinela Diário",
+        "alternateName": ["Sentinela Diário Oficial", "sentineladiario.com"],
+        "url": "https://sentineladiario.com/",
+        "inLanguage": "pt-BR"
+      },
+      {
+        "@type": "Organization",
+        "name": "Sentinela Diário",
+        "url": "https://sentineladiario.com/",
+        "logo": "https://sentineladiario.com/favicon-48x48.png",
+        "email": "contato@sentineladiario.com",
+        "description": "Plataforma brasileira de monitoramento automático de Diários Oficiais por CNPJ com alertas no WhatsApp e e-mail."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Sentinela Diário",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "url": "https://sentineladiario.com/",
+        "description": "Monitoramento automático de Diários Oficiais por CNPJ com alertas no WhatsApp e e-mail sobre contratos, aditivos, reajustes e notificações.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "BRL",
+          "description": "Teste gratuito por 15 dias"
+        }
+      }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
