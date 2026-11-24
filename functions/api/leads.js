@@ -55,6 +55,7 @@ async function notifyNewLead(env, lead) {
           `• CNPJ identificado: ${lead.cnpj || 'Não informado'}\n` +
           `• Responsável: ${lead.nome}\n` +
           `• Contato (WhatsApp / E-mail): ${lead.contato}\n` +
+          `• Cidade / Diário de interesse: ${lead.regiao || 'São José dos Campos - SP'}\n` +
           `• Data: ${lead.criado_em}\n\n` +
           `Acesse o painel: https://sentineladiario.com/painel.html`,
       }),
@@ -96,6 +97,7 @@ export async function onRequestPost({ request, env }) {
   const empresa = String(body.empresa || '').trim();
   const nome = String(body.nome || '').trim();
   const contato = String(body.contato || '').trim();
+  const regiao = String(body.regiao || 'São José dos Campos - SP').trim();
 
   if (!empresa || !nome || !contato) {
     return jsonResponse({ error: 'Preencha empresa/CNPJ, nome e contato.' }, 400);
@@ -108,6 +110,7 @@ export async function onRequestPost({ request, env }) {
     cnpj,
     nome,
     contato,
+    regiao,
     status: body.status || 'ativo',
     origem: body.origem || 'landing_page',
     notas: String(body.notas || '').trim(),
